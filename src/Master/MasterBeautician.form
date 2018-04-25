@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="resizable" type="boolean" value="false"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowClosed" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosed"/>
+  </Events>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="jlableF9" min="-2" pref="136" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jlableF10" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="JTAlamat" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jlableF2" alignment="0" pref="136" max="32767" attributes="0"/>
+                              <Component id="jlableF3" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jlableF1" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jlableF6" min="-2" max="-2" attributes="0"/>
+                              <Component id="jlableF7" min="-2" max="-2" attributes="0"/>
+                              <Component id="jlableF8" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="JTNamaBeautician" max="32767" attributes="0"/>
+                              <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
+                              <Component id="JTNoTelpon" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="jbuttonF4" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="14" max="32767" attributes="0"/>
+                          <Component id="jbuttonF3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jbuttonF2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jbuttonF1" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jlableF4" min="-2" pref="136" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jlableF11" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="JCBStatus" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jlableF1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JTNamaBeautician" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF8" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jlableF2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF7" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JTNoTelpon" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jlableF9" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF10" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JTAlamat" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jlableF3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jlableF6" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="jScrollPane1" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jlableF4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF11" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JCBStatus" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jbuttonF4" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbuttonF1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbuttonF2" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jbuttonF3" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Component class="KomponenGUI.JlableF" name="jlableF1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Nama Beautician"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="No. Telpon"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Keterangan"/>
+      </Properties>
+    </Component>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="KomponenGUI.JTextAreaF" name="JTAKeterangan">
+          <Properties>
+            <Property name="columns" type="int" value="20"/>
+            <Property name="rows" type="int" value="5"/>
+          </Properties>
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTAKeteranganKeyPressed"/>
+          </Events>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="KomponenGUI.JtextF" name="JTNamaBeautician">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTNamaBeauticianKeyPressed"/>
+      </Events>
+    </Component>
+    <Component class="KomponenGUI.JbuttonF" name="jbuttonF1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tambah"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbuttonF1ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="KomponenGUI.JbuttonF" name="jbuttonF2">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tambah &amp; Tutup"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbuttonF2ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="KomponenGUI.JbuttonF" name="jbuttonF4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Kembali"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbuttonF4ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF6">
+      <Properties>
+        <Property name="text" type="java.lang.String" value=":"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF7">
+      <Properties>
+        <Property name="text" type="java.lang.String" value=":"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF8">
+      <Properties>
+        <Property name="text" type="java.lang.String" value=":"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JbuttonF" name="jbuttonF3">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ubah"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbuttonF3ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF9">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Alamat"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF10">
+      <Properties>
+        <Property name="text" type="java.lang.String" value=":"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JtextF" name="JTNoTelpon">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTNoTelponKeyPressed"/>
+      </Events>
+    </Component>
+    <Component class="KomponenGUI.JtextF" name="JTAlamat">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTAlamatKeyPressed"/>
+      </Events>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF4">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Status"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF11">
+      <Properties>
+        <Property name="text" type="java.lang.String" value=":"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JCheckBoxF" name="JCBStatus">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Aktif"/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>
