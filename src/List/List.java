@@ -145,7 +145,7 @@ public class List extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Terlebih Dahulu", "Information", JOptionPane.INFORMATION_MESSAGE);
         } else {
             if (tambahBilling == null) {
-                tambahBilling = new Billing("Antrian Billing", jcomCari1.GetIDTable());
+                tambahBilling = new Billing("Antrian Billing", jcomCari1.GetIDTable1());
             } else {
                 tambahBilling.setState(NORMAL);
                 tambahBilling.toFront();
@@ -690,8 +690,8 @@ public class List extends javax.swing.JFrame {
                 jcomCari1.setOrder(" ORDER BY `NoInvoice` DESC ");
                 break;
             case "Antrian Billing":
-                jcomCari1.setQuery("SELECT b.`NoAntrian`, `KodePasien` as 'Kode', `NamaPasien` as 'Nama', `JenisKelamin` as 'Jenis Kelamin', DATE_FORMAT(`TanggalDaftar`,'%d-%m-%Y') as 'Tanggal Daftar', DATE_FORMAT(`TanggaLahir`,'%d-%m-%Y') as 'Tanggal Lahir', `NoTelpon` as 'No. Telpon', `Pekerjaan`, `Email`, `Alamat`, a.`Catatan`, `NoKartu` FROM `tbmpasien`a LEFT JOIN `tbantrian`b ON a.`IdPasien`=b.`IdPasien` LEFT JOIN `tbperawatan`c ON b.`NoAntrian`=c.`NoAntrian` AND b.`Tanggal`=c.`Tanggal` LEFT JOIN `tbbilling`d ON c.`NoInvoice`=d.`NoInvoice` WHERE `IdAntrian` IS NOT NULL AND b.`Tanggal` = CURDATE() AND b.`Status` = 1 AND `IdBilling` IS NULL");
-                jcomCari1.setOrder(" ORDER BY `NoAntrian` ");
+                jcomCari1.setQuery("SELECT b.`NoAntrian` as 'No. Antrian', c.`NoInvoice` as 'No. Invoice', `KodePasien` as 'Kode', `NamaPasien` as 'Nama', `JenisKelamin` as 'Jenis Kelamin', DATE_FORMAT(`TanggalDaftar`,'%d-%m-%Y') as 'Tanggal Daftar', DATE_FORMAT(`TanggaLahir`,'%d-%m-%Y') as 'Tanggal Lahir', `NoTelpon` as 'No. Telpon', `Pekerjaan`, `Email`, `Alamat`, a.`Catatan`, `NoKartu` FROM `tbmpasien`a LEFT JOIN `tbantrian`b ON a.`IdPasien`=b.`IdPasien` LEFT JOIN `tbperawatan`c ON b.`NoAntrian`=c.`NoAntrian` AND b.`Tanggal`=c.`Tanggal` LEFT JOIN `tbbilling`d ON c.`NoInvoice`=d.`NoInvoice` WHERE `IdAntrian` IS NOT NULL AND b.`Tanggal` = CURDATE() AND b.`Status` = 1 AND `IdBilling` IS NULL");
+                jcomCari1.setOrder(" ORDER BY b.`NoAntrian` ");
                 break;
             case "Billing":
                 jcomCari1.setQuery("SELECT `IdBilling` as 'ID', `NoBilling` as 'No. Billing', DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NoInvoice` as 'No. Invoice', FORMAT(`Bayar`,0) as 'Jumlah Bayar' FROM `tbbilling` WHERE 1");

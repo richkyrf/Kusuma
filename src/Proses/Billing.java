@@ -42,7 +42,7 @@ public class Billing extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
-        JTNoInvoice.setText(getNoInvoice());
+        JTNoInvoice.setText(getNoBilling());
         JBUbah.setVisible(false);
         if (dari.equals("Antrian Billing")) {
             setTitle("Tambah Billing");
@@ -70,7 +70,7 @@ public class Billing extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) JTableTindakan.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT `IdBillingTindakan` as 'ID', `NoBilling` as 'No. Billing', `NamaTindakan` as 'Nama Tindakan', FORMAT(`Jumlah`,0) as 'Jumlah', FORMAT(a.`Harga`,0) as 'Harga', (`Jumlah`*a.`Harga`) as 'Sub Total' FROM `tbbillingtindakan`a JOIN `tbmtindakan`b ON a.`IdTindakan`=b.`IdTindakan` WHERE `NoBilling` = '" + JTNoBilling.getText() + "'");
+        runSelct.setQuery("SELECT `IdBillingTindakan` as 'ID', `NoBilling` as 'No. Billing', `NamaTindakan` as 'Nama Tindakan', FORMAT(`Jumlah`,0) as 'Jumlah', FORMAT(a.`Harga`,0) as 'Harga', FORMAT(`Jumlah`*a.`Harga`,0) as 'Sub Total' FROM `tbbillingtindakan`a JOIN `tbmtindakan`b ON a.`IdTindakan`=b.`IdTindakan` WHERE `NoBilling` = '" + JTNoBilling.getText() + "'");
         try {
             ResultSet rs = runSelct.excute();
             int row = 0;
@@ -79,6 +79,62 @@ public class Billing extends javax.swing.JFrame {
                 JTableTindakan.setValueAt(rs.getString(3), row, 0);
                 JTableTindakan.setValueAt(rs.getString(4).replace(",", "."), row, 1);
                 JTableTindakan.setValueAt(rs.getString(5).replace(",", "."), row, 2);
+                JTableTindakan.setValueAt(rs.getString(6).replace(",", "."), row, 2);
+                row++;
+            }
+        } catch (SQLException e) {
+            out.println("E6" + e);
+            showMessageDialog(null, "Gagal Panggil Data Billing Tindakan");
+        } finally {
+            runSelct.closecon();
+        }
+        DefaultTableModel model2 = (DefaultTableModel) JTableObat.getModel();
+        model2.getDataVector().removeAllElements();
+        RunSelct runSelct2 = new RunSelct();
+        runSelct2.setQuery("SELECT `IdBillingObat` as 'ID', `NoBilling` as 'No. Billing', `NamaBarang` as 'Nama Obat', FORMAT(`Jumlah`,0) as 'Jumlah', FORMAT(`Harga`,0) as 'Harga', FORMAT(`Jumlah`*a.`Harga`,0) as 'Sub Total' FROM `tbbillingobat`a JOIN `tbmbarang`b ON a.`IdObat`=b.`IdBarang` WHERE `NoBilling` = '" + JTNoInvoice.getText() + "'");
+        try {
+            ResultSet rs2 = runSelct2.excute();
+            int row2 = 0;
+            while (rs2.next()) {
+                model2.addRow(new Object[]{"", "", "", "", ""});
+                JTableObat.setValueAt(rs2.getString(3), row2, 0);
+                JTableObat.setValueAt(rs2.getString(4).replace(",", "."), row2, 1);
+                JTableObat.setValueAt(rs2.getString(5).replace(",", "."), row2, 2);
+                JTableObat.setValueAt(rs2.getString(6).replace(",", "."), row2, 3);
+                row2++;
+            }
+        } catch (SQLException e) {
+            out.println("E6" + e);
+            showMessageDialog(null, "Gagal Panggil Data Billing Obat");
+        } finally {
+            runSelct2.closecon();
+        }
+    }
+
+    void loadPerawatan(Object noInvoice) {
+        DRunSelctOne dRunSelctOne = new DRunSelctOne();
+        dRunSelctOne.seterorm("Gagal loadPerawatan()");
+        dRunSelctOne.setQuery("SELECT `IdPerawatan` as 'ID', CONCAT('(',`KodePasien`,') ',`NamaPasien`) as 'Nama Pasien', DATE_FORMAT(a.`Tanggal`,'%d-%m-%Y') as 'Tanggal', a.`NoAntrian` as 'No. Antrian', `NoInvoice` as 'No. Invoice', `NamaDokter` as 'Nama Dokter', `NamaBeautician` as 'Nama Beautician' FROM `tbperawatan`a JOIN `tbantrian`b ON a.`NoAntrian`=b.`NoAntrian` AND a.`Tanggal`=b.`Tanggal` JOIN `tbmpasien`c ON b.`IdPasien`=c.`IdPasien` JOIN `tbmdokter`d ON a.`IdDokter`=d.`IdDokter` LEFT JOIN `tbmbeautician`e ON a.`IdBeautician`=e.`IdBeautician` WHERE a.`NoInvoice` = '" + noInvoice + "'");
+        ArrayList<String> list = dRunSelctOne.excute();
+        JTNamaPasien.setText(list.get(1));
+        JDTanggal.setDate(FDateF.strtodate(list.get(2), "dd-MM-yyyy"));
+        JTNoAntrian.setText(list.get(3));
+        JTNoInvoice.setText(list.get(4));
+        JCNamaDokter.setSelectedItem(list.get(5));
+        JCNamaBeautician.setSelectedItem(list.get(6));
+        DefaultTableModel model = (DefaultTableModel) JTableTindakan.getModel();
+        model.getDataVector().removeAllElements();
+        RunSelct runSelct = new RunSelct();
+        runSelct.setQuery("SELECT `IdPerawatanDetail` as 'ID', `NoInvoice` as 'No. Invoice', `NamaTindakan` as 'Nama Tindakan', FORMAT(`Jumlah`,0) as 'Jumlah', FORMAT(`Harga`,0) as 'Harga', FORMAT(`Jumlah`*`Harga`,0) as 'Sub Total' FROM `tbperawatandetail`a JOIN `tbmtindakan`b ON a.`IdTindakan`=b.`IdTindakan` WHERE `NoInvoice` = '" + JTNoInvoice.getText() + "'");
+        try {
+            ResultSet rs = runSelct.excute();
+            int row = 0;
+            while (rs.next()) {
+                model.addRow(new Object[]{"", "", "", "", ""});
+                JTableTindakan.setValueAt(rs.getString(3), row, 0);
+                JTableTindakan.setValueAt(rs.getString(4).replace(",", "."), row, 1);
+                JTableTindakan.setValueAt(rs.getString(5).replace(",", "."), row, 2);
+                JTableTindakan.setValueAt(rs.getString(6).replace(",", "."), row, 3);
                 row++;
             }
         } catch (SQLException e) {
@@ -90,7 +146,7 @@ public class Billing extends javax.swing.JFrame {
         DefaultTableModel model2 = (DefaultTableModel) JTableObat.getModel();
         model2.getDataVector().removeAllElements();
         RunSelct runSelct2 = new RunSelct();
-        runSelct2.setQuery("SELECT `IdObatDetail` as 'ID', `NoInvoice` as 'No. Invoice', `NamaBarang` as 'Nama Obat', FORMAT(`Jumlah`,0) as 'Jumlah', FORMAT(`Harga`,0) as 'Harga' FROM `tbobatdetail` WHERE `NoInvoice` = '" + JTNoInvoice.getText() + "'");
+        runSelct2.setQuery("SELECT `IdObatDetail` as 'ID', `NoInvoice` as 'No. Invoice', `NamaBarang` as 'Nama Obat', FORMAT(`Jumlah`,0) as 'Jumlah', FORMAT(`Harga`,0) as 'Harga', FORMAT(`Jumlah`*`Harga`,0) as 'Sub Total' FROM `tbobatdetail`a JOIN `tbmbarang`b ON a.`IdObat`=b.`IdBarang` WHERE `NoInvoice` = '" + JTNoInvoice.getText() + "'");
         try {
             ResultSet rs2 = runSelct2.excute();
             int row2 = 0;
@@ -99,6 +155,7 @@ public class Billing extends javax.swing.JFrame {
                 JTableObat.setValueAt(rs2.getString(3), row2, 0);
                 JTableObat.setValueAt(rs2.getString(4).replace(",", "."), row2, 1);
                 JTableObat.setValueAt(rs2.getString(5).replace(",", "."), row2, 2);
+                JTableObat.setValueAt(rs2.getString(6).replace(",", "."), row2, 3);
                 row2++;
             }
         } catch (SQLException e) {
@@ -109,27 +166,18 @@ public class Billing extends javax.swing.JFrame {
         }
     }
 
-    void loadPerawatan(Object kodePasien) {
-        DRunSelctOne dRunSelctOne = new DRunSelctOne();
-        dRunSelctOne.seterorm("Gagal loadPasien()");
-        dRunSelctOne.setQuery("SELECT CONCAT('(',`KodePasien`,') ',`NamaPasien`), `NoAntrian` FROM `tbmpasien`a LEFT JOIN `tbantrian`b ON a.`IdPasien`=b.`IdPasien` WHERE 1 AND `IdAntrian` IS NOT NULL AND `Tanggal` = CURDATE() AND b.`Status` = 0 AND `KodePasien` = '" + kodePasien + "'");
-        ArrayList<String> list = dRunSelctOne.excute();
-        JTNamaPasien.setText(list.get(0));
-        JTNoAntrian.setText(list.get(1));
-    }
-
-    public static String getNoInvoice() {
+    public static String getNoBilling() {
         NumberFormat nf = new DecimalFormat("000000");
         String NoTransaksi = null;
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT `NoInvoice` FROM `tbperawatan` ORDER BY `NoInvoice` DESC LIMIT 1");
+        runSelct.setQuery("SELECT `NoBilling` FROM `tbbilling` ORDER BY `NoBilling` DESC LIMIT 1");
         try {
             ResultSet rs = runSelct.excute();
             if (!rs.isBeforeFirst()) {
-                NoTransaksi = "KB-" + "000001" + "-INV";
+                NoTransaksi = "KB-" + "000001" + "-BIL";
             }
             while (rs.next()) {
-                String nobarangmasuk = rs.getString("NoInvoice");
+                String nobarangmasuk = rs.getString("NoBilling");
                 String number = nobarangmasuk.substring(3, 9);
                 //String month = nobarangmasuk.substring(8, 10);
                 int p = 1 + parseInt(number);
@@ -139,15 +187,15 @@ public class Billing extends javax.swing.JFrame {
                     p = 1;
                 }*/
                 if (p != 999999) {
-                    NoTransaksi = "KB-" + nf.format(p) + "-INV";
+                    NoTransaksi = "KB-" + nf.format(p) + "-BIL";
                 } else if (p == 999999) {
                     p = 1;
-                    NoTransaksi = "KB-" + nf.format(p) + "-INV";
+                    NoTransaksi = "KB-" + nf.format(p) + "-BIL";
                 }
             }
         } catch (SQLException e) {
             out.println("E6" + e);
-            showMessageDialog(null, "Gagal Generate Nomor Invoice");
+            showMessageDialog(null, "Gagal Generate Nomor Billing");
         } finally {
             runSelct.closecon();
         }
