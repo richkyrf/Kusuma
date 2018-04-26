@@ -592,6 +592,11 @@ public class Billing extends javax.swing.JFrame {
         jlableF17.setText("No. Invoice");
 
         JBKembali.setText("Kembali");
+        JBKembali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBKembaliActionPerformed(evt);
+            }
+        });
 
         JBUbah.setText("Ubah");
         JBUbah.addActionListener(new java.awt.event.ActionListener() {
