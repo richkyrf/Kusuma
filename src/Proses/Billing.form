@@ -89,9 +89,32 @@
                               </Group>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <Component id="JBKembali" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
-                              <Component id="JBUbah" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Component id="JBKembali" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="JBUbah" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="jlableF10" max="32767" attributes="0"/>
+                                          <Component id="jlableF9" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="jlableF8" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="JTGrandTotal" min="-2" pref="160" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="jlableF11" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="JTBayar" min="-2" pref="160" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                              </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="JBTambah" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -168,7 +191,19 @@
               <Component id="jlableF19" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" pref="96" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="JTGrandTotal" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF8" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF9" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="jlableF10" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jlableF11" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="JTBayar" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="55" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="JBTambah" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JBKembali" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -292,6 +327,7 @@
         <Component class="KomponenGUI.JPlaceHolder" name="JTJumlahTindakan">
           <Events>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTJumlahTindakanKeyPressed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTJumlahTindakanKeyReleased"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JTJumlahTindakan.setPlaceholder(&quot;Jumlah&quot;);"/>
@@ -323,7 +359,7 @@
                     <Column editable="true" title="Sub Total" type="java.lang.Object"/>
                   </Table>
                 </Property>
-                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="JTableTindakan.setrender(new int[]{1,2}, new String[]{&quot;Number&quot;,&quot;Number&quot;});">
+                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="JTableTindakan.setrender(new int[]{1,2,3}, new String[]{&quot;Number&quot;,&quot;Number&quot;,&quot;Number&quot;});">
                   <TableColumnModel selectionModel="0">
                     <Column maxWidth="500" minWidth="500" prefWidth="500" resizable="true">
                       <Title/>
@@ -365,12 +401,16 @@
         <Component class="KomponenGUI.JPlaceHolder" name="JTHargaTindakan">
           <Events>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTHargaTindakanKeyPressed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTHargaTindakanKeyReleased"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JTHargaTindakan.setPlaceholder(&quot;Harga&quot;);"/>
           </AuxValues>
         </Component>
         <Component class="KomponenGUI.JPlaceHolder" name="JTSubTotalTindakan">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
           <Events>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTSubTotalTindakanKeyPressed"/>
           </Events>
@@ -441,6 +481,7 @@
         <Component class="KomponenGUI.JPlaceHolder" name="JTJumlahObat">
           <Events>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTJumlahObatKeyPressed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTJumlahObatKeyReleased"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JTJumlahObat.setPlaceholder(&quot;Jumlah&quot;);"/>
@@ -472,7 +513,7 @@
                     <Column editable="true" title="Sub Total" type="java.lang.Object"/>
                   </Table>
                 </Property>
-                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="JTableObat.setrender(new int[]{1,2}, new String[]{&quot;Number&quot;,&quot;Number&quot;});">
+                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor" postCode="JTableObat.setrender(new int[]{1,2,3}, new String[]{&quot;Number&quot;,&quot;Number&quot;,&quot;Number&quot;});">
                   <TableColumnModel selectionModel="0">
                     <Column maxWidth="500" minWidth="500" prefWidth="500" resizable="true">
                       <Title/>
@@ -514,12 +555,16 @@
         <Component class="KomponenGUI.JPlaceHolder" name="JTHargaObat">
           <Events>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTHargaObatKeyPressed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTHargaObatKeyReleased"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JTHargaObat.setPlaceholder(&quot;Harga&quot;);"/>
           </AuxValues>
         </Component>
         <Component class="KomponenGUI.JPlaceHolder" name="JTSubTotalObat">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
           <Events>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTSubTotalObatKeyPressed"/>
           </Events>
@@ -644,6 +689,45 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="No. Billing"/>
       </Properties>
+    </Component>
+    <Component class="KomponenGUI.JPlaceHolder" name="JTGrandTotal">
+      <Properties>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTGrandTotalKeyPressed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JTGrandTotal.setPlaceholder(&quot;Grand Total&quot;);"/>
+      </AuxValues>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF8">
+      <Properties>
+        <Property name="text" type="java.lang.String" value=":"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF9">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Grand Total"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF10">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Bayar"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JlableF" name="jlableF11">
+      <Properties>
+        <Property name="text" type="java.lang.String" value=":"/>
+      </Properties>
+    </Component>
+    <Component class="KomponenGUI.JPlaceHolder" name="JTBayar">
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JTBayarKeyPressed"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="JTBayar.setPlaceholder(&quot;Bayar&quot;);"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

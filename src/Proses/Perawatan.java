@@ -179,7 +179,7 @@ public class Perawatan extends javax.swing.JFrame {
         if (JCTindakan.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Silahkan Pilih Tindakan Terlebih Dahulu.");
             return false;
-        } else if (JTJumlahTindakan.getText().replace("0", "").isEmpty()) {
+        } else if (JTJumlahTindakan.getNumberFormattedText().replace("0", "").isEmpty()) {
             JOptionPane.showMessageDialog(this, "Jumlah Tidak Boleh Kosong.");
             return false;
         } else {
@@ -191,7 +191,7 @@ public class Perawatan extends javax.swing.JFrame {
         if (JCObat.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Silahkan Pilih Obat Terlebih Dahulu.");
             return false;
-        } else if (JTJumlahObat.getText().replace("0", "").isEmpty()) {
+        } else if (JTJumlahObat.getNumberFormattedText().replace("0", "").isEmpty()) {
             JOptionPane.showMessageDialog(this, "Jumlah Tidak Boleh Kosong.");
             return false;
         } else {
