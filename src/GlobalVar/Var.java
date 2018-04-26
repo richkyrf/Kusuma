@@ -22,6 +22,7 @@ public class Var {
     public static TambahUser tambahUser;
     public static ResetPasswordUser resetPasswordUser;
     public static GantiPassword gantiPassword;
+    public static MenuUtama menuUtama;
 
     public static MasterBarang tambahMasterBarang, ubahMasterBarang;
     public static MasterDokter tambahMasterDokter, ubahMasterDokter;
@@ -30,11 +31,11 @@ public class Var {
     public static MasterBeautician tambahMasterBeautician, ubahMasterBeautician;
     public static MasterTindakan tambahMasterTindakan, ubahMasterTindakan;
 
-    public static List listMasterBarang, listMasterDokter, listMasterPasien, listPenjualan, listMasterBeautician, listMasterTindakan, listAntrian, listMasterPemasok, listBarangMasuk, listPenyesuaianStok;
+    public static List listMasterBarang, listMasterDokter, listMasterPasien, listPenjualan, listMasterBeautician, listMasterTindakan, listAntrian, listMasterPemasok, listBarangMasuk, listPenyesuaianStok, listPerawatan;
 
     public static Jcari jcari;
     public static Penjualan tambahPenjualan, ubahPenjualan;
     public static BarangMasuk tambahBarangMasuk, ubahBarangMasuk;
-    public static Perawatan tambahTindakan, ubahTindakan;
+    public static Perawatan tambahPerawatan, ubahPerawatan;
     public static PenyesuaianStok tambahPenyesuaianStok;
 }

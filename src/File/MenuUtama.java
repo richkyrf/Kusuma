@@ -8,11 +8,13 @@ package File;
 import List.*;
 import Proses.*;
 import static GlobalVar.Var.*;
+import KomponenGUI.FDateF;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,6 +34,8 @@ public class MenuUtama extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setTitle("Menu Utama");
         setVisible(true);
+        new Threading(jlableF1, "SELECT COUNT(*) FROM `tbantrian` WHERE `Status` = 0 AND `Tanggal` = '" + FDateF.datetostr(new Date(), "yyyy-MM-dd") + "'", "Pasien Hari Ini: ", 500);
+        new Threading(jlableF5, "SELECT COUNT(*) FROM `tbantrian` WHERE `Status` = 1 AND `Tanggal` = '" + FDateF.datetostr(new Date(), "yyyy-MM-dd") + "'", "Antrian Billing: ", 500);
     }
 
     /**
@@ -46,7 +50,12 @@ public class MenuUtama extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jlableF1 = new KomponenGUI.JlableF();
         jbuttonF1 = new KomponenGUI.JbuttonF();
-        jbuttonF2 = new KomponenGUI.JbuttonF();
+        jPanel3 = new javax.swing.JPanel();
+        jlableF3 = new KomponenGUI.JlableF();
+        jbuttonF4 = new KomponenGUI.JbuttonF();
+        jPanel5 = new javax.swing.JPanel();
+        jlableF5 = new KomponenGUI.JlableF();
+        jbuttonF5 = new KomponenGUI.JbuttonF();
         JMenuBar = new javax.swing.JMenuBar();
         JMFile = new javax.swing.JMenu();
         JMITambahUser = new javax.swing.JMenuItem();
@@ -108,12 +117,70 @@ public class MenuUtama extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jbuttonF2.setText("Pasien");
-        jbuttonF2.addActionListener(new java.awt.event.ActionListener() {
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pasien", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
+
+        jlableF3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlableF3.setText("List Pasien");
+
+        jbuttonF4.setText("Pasien");
+        jbuttonF4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbuttonF2ActionPerformed(evt);
+                jbuttonF4ActionPerformed(evt);
             }
         });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlableF3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlableF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Billing", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
+
+        jlableF5.setText("Antrian Billing : 0");
+
+        jbuttonF5.setText("Lihat");
+        jbuttonF5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbuttonF5ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlableF5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbuttonF5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlableF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jbuttonF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         JMFile.setText("File");
 
@@ -294,19 +361,22 @@ public class MenuUtama extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(612, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(205, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 421, Short.MAX_VALUE)
-                .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(463, Short.MAX_VALUE))
         );
 
         pack();
@@ -353,7 +423,12 @@ public class MenuUtama extends javax.swing.JFrame {
     }//GEN-LAST:event_JMIListPackingActionPerformed
 
     private void JMIListPerawatanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIListPerawatanActionPerformed
-
+        if (listPerawatan == null) {
+            listPerawatan = new List("Perawatan");
+        } else {
+            listPerawatan.setState(NORMAL);
+            listPerawatan.toFront();
+        }
     }//GEN-LAST:event_JMIListPerawatanActionPerformed
 
     private void JMIMasterKendaraanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIMasterKendaraanActionPerformed
@@ -410,15 +485,6 @@ public class MenuUtama extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
-    private void jbuttonF2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF2ActionPerformed
-        if (listMasterPasien == null) {
-            listMasterPasien = new List("Master Pasien");
-        } else {
-            listMasterPasien.setState(NORMAL);
-            listMasterPasien.toFront();
-        }
-    }//GEN-LAST:event_jbuttonF2ActionPerformed
-
     private void jbuttonF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF1ActionPerformed
         if (jlableF1.getText().split("\\: ")[1].equals("0")) {
             JOptionPane.showMessageDialog(this, "Belum Ada Pasien Yang Antri.");
@@ -461,7 +527,7 @@ public class MenuUtama extends javax.swing.JFrame {
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         if (tambahPenyesuaianStok == null) {
-            tambahPenyesuaianStok = new PenyesuaianStok("Penyesuaian Stok");
+            tambahPenyesuaianStok = new PenyesuaianStok();
         } else {
             tambahPenyesuaianStok.setState(NORMAL);
             tambahPenyesuaianStok.toFront();
@@ -489,6 +555,19 @@ public class MenuUtama extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_JMIProsesPackingActionPerformed
+
+    private void jbuttonF4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF4ActionPerformed
+        if (listMasterPasien == null) {
+            listMasterPasien = new List("Master Pasien");
+        } else {
+            listMasterPasien.setState(NORMAL);
+            listMasterPasien.toFront();
+        }
+    }//GEN-LAST:event_jbuttonF4ActionPerformed
+
+    private void jbuttonF5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbuttonF5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -552,8 +631,19 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private KomponenGUI.JbuttonF jbuttonF1;
     private KomponenGUI.JbuttonF jbuttonF2;
+    private KomponenGUI.JbuttonF jbuttonF3;
+    private KomponenGUI.JbuttonF jbuttonF4;
+    private KomponenGUI.JbuttonF jbuttonF5;
     public static KomponenGUI.JlableF jlableF1;
+    public static KomponenGUI.JlableF jlableF2;
+    private KomponenGUI.JlableF jlableF3;
+    public static KomponenGUI.JlableF jlableF4;
+    public static KomponenGUI.JlableF jlableF5;
     // End of variables declaration//GEN-END:variables
 }

@@ -14,6 +14,7 @@ import KomponenGUI.FDateF;
 import LSubProces.DRunSelctOne;
 import LSubProces.MultiInsert;
 import LSubProces.RunSelct;
+import static Proses.Penjualan.JCPasien;
 import static java.lang.Integer.parseInt;
 import static java.lang.System.out;
 import java.sql.ResultSet;
@@ -30,7 +31,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 public class Perawatan extends javax.swing.JFrame {
 
     /**
-     * Creates new form Tindakan
+     * Creates new form Perawatan
      */
     String Dari, Parameter;
 
@@ -38,47 +39,98 @@ public class Perawatan extends javax.swing.JFrame {
         Parameter = parameter.toString();
         Dari = dari;
         initComponents();
-        setTitle("Tambah Tindakan");
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setVisible(true);
         JTNoInvoice.setText(getNoInvoice());
         JBUbah.setVisible(false);
         if (dari.equals("Antrian")) {
+            setTitle("Tambah Perawatan");
             loadPasien(parameter);
             JBUbah.setVisible(false);
         } else {
+            setTitle("Ubah Perawatan");
             JBTambah.setVisible(false);
-            JBTambahTutup.setVisible(false);
             loadData(parameter);
         }
         JCNamaDokter.requestFocus();
     }
 
     void loadData(Object idEdit) {
-
+        DRunSelctOne dRunSelctOne = new DRunSelctOne();
+        dRunSelctOne.seterorm("Eror gagal Menampilkan Data Perawatan");
+        dRunSelctOne.setQuery("SELECT `IdPerawatan` as 'ID', DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NoInvoice` as 'No. Invoice', `NamaDokter` as 'Nama Dokter', `NamaBeautician` as 'Nama Beautician', `Keluhan`, `Diagnosa`, `Catatan` FROM `tbperawatan`a JOIN `tbmdokter`b ON a.`IdDokter`=b.`IdDokter` JOIN `tbmbeautician`c ON a.`IdBeautician`=c.`IdBeautician` WHERE `IdPerawatan` = '" + Parameter + "'");
+        ArrayList<String> list = dRunSelctOne.excute();
+        JDTanggal.setDate(FDateF.strtodate(list.get(1), "dd-MM-yyyy"));
+        JTNoInvoice.setText(list.get(2));
+        JCNamaDokter.setSelectedItem(list.get(3));
+        JCNamaBeautician.setSelectedItem(list.get(4));
+        JTKeluhanPasien.setText(list.get(5));
+        JTDiagnosaPasien.setText(list.get(6));
+        JTCatatanPasien.setText(list.get(7));
+        DefaultTableModel model = (DefaultTableModel) JTableTindakan.getModel();
+        model.getDataVector().removeAllElements();
+        RunSelct runSelct = new RunSelct();
+        runSelct.setQuery("SELECT `IdPerawatanDetail` as 'ID', `NoInvoice` as 'No. Invoice', `NamaTindakan` as 'Nama Tindakan', FORMAT(`Jumlah`,0) as 'Jumlah', FORMAT(`Harga`,0) as 'Harga' FROM `tbperawatandetail` WHERE `NoInvoice` = '" + JTNoInvoice.getText() + "'");
+        try {
+            ResultSet rs = runSelct.excute();
+            int row = 0;
+            while (rs.next()) {
+                model.addRow(new Object[]{"", "", "", "", ""});
+                JTableTindakan.setValueAt(rs.getString(3), row, 0);
+                JTableTindakan.setValueAt(rs.getString(4).replace(",", "."), row, 1);
+                JTableTindakan.setValueAt(rs.getString(5).replace(",", "."), row, 2);
+                row++;
+            }
+        } catch (SQLException e) {
+            out.println("E6" + e);
+            showMessageDialog(null, "Gagal Panggil Data Detail Tindakan");
+        } finally {
+            runSelct.closecon();
+        }
+        DefaultTableModel model2 = (DefaultTableModel) JTableObat.getModel();
+        model.getDataVector().removeAllElements();
+        RunSelct runSelct2 = new RunSelct();
+        runSelct.setQuery("SELECT `IdObatDetail` as 'ID', `NoInvoice` as 'No. Invoice', `NamaBarang` as 'Nama Obat', FORMAT(`Jumlah`,0) as 'Jumlah', FORMAT(`Harga`,0) as 'Harga' FROM `tbobatdetail` WHERE `NoInvoice` = '" + JTNoInvoice.getText() + "'");
+        try {
+            ResultSet rs = runSelct.excute();
+            int row = 0;
+            while (rs.next()) {
+                model.addRow(new Object[]{"", "", "", "", ""});
+                JTableObat.setValueAt(rs.getString(3), row, 0);
+                JTableObat.setValueAt(rs.getString(4).replace(",", "."), row, 1);
+                JTableObat.setValueAt(rs.getString(5).replace(",", "."), row, 2);
+                row++;
+            }
+        } catch (SQLException e) {
+            out.println("E6" + e);
+            showMessageDialog(null, "Gagal Panggil Data Detail Obat");
+        } finally {
+            runSelct.closecon();
+        }
     }
 
     void loadPasien(Object kodePasien) {
         DRunSelctOne dRunSelctOne = new DRunSelctOne();
         dRunSelctOne.seterorm("Gagal loadPasien()");
-        dRunSelctOne.setQuery("SELECT CONCAT('(',`KodePasien`,') ',`NamaPasien`) FROM `tbmpasien` WHERE `KodePasien` = '" + kodePasien + "'");
+        dRunSelctOne.setQuery("SELECT CONCAT('(',`KodePasien`,') ',`NamaPasien`), `NoAntrian` FROM `tbmpasien`a LEFT JOIN `tbantrian`b ON a.`IdPasien`=b.`IdPasien` WHERE 1 AND `IdAntrian` IS NOT NULL AND `Tanggal` = CURDATE() AND b.`Status` = 0 AND `KodePasien` = '" + kodePasien + "'");
         ArrayList<String> list = dRunSelctOne.excute();
         JTNamaPasien.setText(list.get(0));
+        JTNoAntrian.setText(list.get(1));
     }
 
     public static String getNoInvoice() {
         NumberFormat nf = new DecimalFormat("000000");
         String NoTransaksi = null;
         RunSelct runSelct = new RunSelct();
-        runSelct.setQuery("SELECT `NoTransaksi` FROM `tbbarangmasuk` ORDER BY `NoTransaksi` DESC LIMIT 1");
+        runSelct.setQuery("SELECT `NoInvoice` FROM `tbperawatan` ORDER BY `NoInvoice` DESC LIMIT 1");
         try {
             ResultSet rs = runSelct.excute();
             if (!rs.isBeforeFirst()) {
                 NoTransaksi = "KB-" + "000001" + "-INV";
             }
             while (rs.next()) {
-                String nobarangmasuk = rs.getString("NoTransaksi");
+                String nobarangmasuk = rs.getString("NoInvoice");
                 String number = nobarangmasuk.substring(3, 9);
                 //String month = nobarangmasuk.substring(8, 10);
                 int p = 1 + parseInt(number);
@@ -116,6 +168,12 @@ public class Perawatan extends javax.swing.JFrame {
         } else if (JCNamaBeautician.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Silahkan Pilih Nama Beautician Terlebih Dahulu.");
             return false;
+        } else if (JTableTindakan.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Silahkan Isi Tindakan Terlebih Dahulu.");
+            return false;
+        } else if (JTableObat.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Silahkan Isi Obat Terlebih Dahulu.");
+            return false;
         } else {
             return true;
         }
@@ -137,13 +195,13 @@ public class Perawatan extends javax.swing.JFrame {
     }
 
     boolean checkTableObat() {
-        if (JCTindakan.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Silahkan Pilih Tindakan Terlebih Dahulu.");
+        if (JCObat.getSelectedIndex() == 0) {
+            JOptionPane.showMessageDialog(this, "Silahkan Pilih Obat Terlebih Dahulu.");
             return false;
-        } else if (JTJumlahTindakan.getText().replace("0", "").isEmpty()) {
+        } else if (JTJumlahObat.getText().replace("0", "").isEmpty()) {
             JOptionPane.showMessageDialog(this, "Jumlah Tidak Boleh Kosong.");
             return false;
-        } else if (JTHargaTindakan.getText().replace("0", "").isEmpty()) {
+        } else if (JTHargaObat.getText().replace("0", "").isEmpty()) {
             JOptionPane.showMessageDialog(this, "Harga Tidak Boleh Kosong.");
             return false;
         } else {
@@ -202,12 +260,14 @@ public class Perawatan extends javax.swing.JFrame {
         JTNoInvoice = new KomponenGUI.JtextF();
         jlableF17 = new KomponenGUI.JlableF();
         JBKembali = new KomponenGUI.JbuttonF();
-        JBTambahTutup = new KomponenGUI.JbuttonF();
         JBUbah = new KomponenGUI.JbuttonF();
         jSeparator1 = new javax.swing.JSeparator();
         jlableF18 = new KomponenGUI.JlableF();
         jSeparator2 = new javax.swing.JSeparator();
         jlableF19 = new KomponenGUI.JlableF();
+        jlableF20 = new KomponenGUI.JlableF();
+        jlableF21 = new KomponenGUI.JlableF();
+        JTNoAntrian = new KomponenGUI.JtextF();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -228,6 +288,11 @@ public class Perawatan extends javax.swing.JFrame {
         jlableF5.setText(":");
 
         JCNamaDokter.load("SELECT '-- Pilih Nama Dokter --' as 'NamaDokter' UNION ALL SELECT `NamaDokter` FROM `tbmdokter`");
+        JCNamaDokter.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                JCNamaDokterKeyPressed(evt);
+            }
+        });
 
         jlableF6.setText("Nama Beautician");
 
@@ -237,15 +302,38 @@ public class Perawatan extends javax.swing.JFrame {
 
         jlableF9.setText(":");
 
+        JTKeluhanPasien.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                JTKeluhanPasienKeyPressed(evt);
+            }
+        });
+
         jlableF10.setText("Diagnosa Pasien");
 
         jlableF11.setText(":");
+
+        JTDiagnosaPasien.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                JTDiagnosaPasienKeyPressed(evt);
+            }
+        });
 
         jlableF12.setText("Catatan Pasien");
 
         jlableF13.setText(":");
 
+        JTCatatanPasien.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                JTCatatanPasienKeyPressed(evt);
+            }
+        });
+
         JCNamaBeautician.load("SELECT '-- Pilih Nama Beautician --' as 'Nama Beautician' UNION ALL SELECT `NamaBeautician` FROM `tbmbeautician`");
+        JCNamaBeautician.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                JCNamaBeauticianKeyPressed(evt);
+            }
+        });
 
         jbuttonF1.setText("Tambah");
         jbuttonF1.addActionListener(new java.awt.event.ActionListener() {
@@ -290,6 +378,7 @@ public class Perawatan extends javax.swing.JFrame {
             JTableTindakan.getColumnModel().getColumn(1).setPreferredWidth(105);
             JTableTindakan.getColumnModel().getColumn(1).setMaxWidth(105);
         }
+        JTableTindakan.setrender(new int[]{1,2}, new String[]{"Number","Number"});
 
         jbuttonF3.setText("Hapus");
         jbuttonF3.addActionListener(new java.awt.event.ActionListener() {
@@ -372,7 +461,7 @@ public class Perawatan extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Tindakan", "Jumlah", "Harga"
+                "Obat", "Jumlah", "Harga"
             }
         ));
         jScrollPane2.setViewportView(JTableObat);
@@ -384,6 +473,7 @@ public class Perawatan extends javax.swing.JFrame {
             JTableObat.getColumnModel().getColumn(1).setPreferredWidth(105);
             JTableObat.getColumnModel().getColumn(1).setMaxWidth(105);
         }
+        JTableObat.setrender(new int[]{1,2}, new String[]{"Number","Number"});
 
         jbuttonF4.setText("Hapus");
         jbuttonF4.addActionListener(new java.awt.event.ActionListener() {
@@ -467,13 +557,6 @@ public class Perawatan extends javax.swing.JFrame {
 
         JBKembali.setText("Kembali");
 
-        JBTambahTutup.setText("Tambah & Tutup");
-        JBTambahTutup.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBTambahTutupActionPerformed(evt);
-            }
-        });
-
         JBUbah.setText("Ubah");
         JBUbah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -488,6 +571,12 @@ public class Perawatan extends javax.swing.JFrame {
         jlableF19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlableF19.setText("-- Obat & Injeksi Pasien --");
         jlableF19.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        jlableF20.setText("Antrian No.");
+
+        jlableF21.setText(":");
+
+        JTNoAntrian.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -513,29 +602,36 @@ public class Perawatan extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jlableF13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(JTCatatanPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jlableF11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(JTDiagnosaPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jlableF9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(JTKeluhanPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createSequentialGroup()
                                                 .addComponent(jlableF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(JTNamaPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(jlableF15, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jlableF7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(JCNamaBeautician, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(jlableF13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(JTCatatanPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(jlableF11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(JTDiagnosaPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(jlableF9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(JTKeluhanPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addComponent(jlableF7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                        .addComponent(JCNamaBeautician, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addGap(187, 187, 187)
+                                                .addComponent(jlableF20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 0, Short.MAX_VALUE)))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jlableF14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jlableF14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jlableF21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jlableF5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -547,13 +643,12 @@ public class Perawatan extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(JTNoInvoice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(JDTanggal, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)))
+                                    .addComponent(JDTanggal, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                                    .addComponent(JTNoAntrian, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(JBKembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(JBUbah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(JBTambahTutup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(JBTambah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(10, 10, 10))
@@ -590,7 +685,10 @@ public class Perawatan extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlableF6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JCNamaBeautician, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JCNamaBeautician, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlableF20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlableF21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JTNoAntrian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlableF8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -622,7 +720,6 @@ public class Perawatan extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JBTambah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JBKembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JBTambahTutup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JBUbah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -672,9 +769,9 @@ public class Perawatan extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         if (JBTambah.isVisible()) {
-            tambahTindakan = null;
+            tambahPerawatan = null;
         } else {
-            ubahTindakan = null;
+            ubahPerawatan = null;
         }
     }//GEN-LAST:event_formWindowClosed
 
@@ -699,12 +796,8 @@ public class Perawatan extends javax.swing.JFrame {
     }//GEN-LAST:event_JTHargaObatKeyPressed
 
     private void JBTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTambahActionPerformed
-        tambahData(false);
+        tambahData();
     }//GEN-LAST:event_JBTambahActionPerformed
-
-    private void JBTambahTutupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTambahTutupActionPerformed
-        tambahData(true);
-    }//GEN-LAST:event_JBTambahTutupActionPerformed
 
     private void JBUbahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBUbahActionPerformed
         ubahData();
@@ -720,6 +813,36 @@ public class Perawatan extends javax.swing.JFrame {
     private void JBKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBKembaliActionPerformed
         dispose();
     }//GEN-LAST:event_JBKembaliActionPerformed
+
+    private void JCNamaDokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCNamaDokterKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            JCNamaBeautician.requestFocus();
+        }
+    }//GEN-LAST:event_JCNamaDokterKeyPressed
+
+    private void JTKeluhanPasienKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTKeluhanPasienKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            JTDiagnosaPasien.requestFocus();
+        }
+    }//GEN-LAST:event_JTKeluhanPasienKeyPressed
+
+    private void JCNamaBeauticianKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCNamaBeauticianKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            JTKeluhanPasien.requestFocus();
+        }
+    }//GEN-LAST:event_JCNamaBeauticianKeyPressed
+
+    private void JTDiagnosaPasienKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTDiagnosaPasienKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            JTCatatanPasien.requestFocus();
+        }
+    }//GEN-LAST:event_JTDiagnosaPasienKeyPressed
+
+    private void JTCatatanPasienKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTCatatanPasienKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            JCTindakan.requestFocus();
+        }
+    }//GEN-LAST:event_JTCatatanPasienKeyPressed
 
     /**
      * @param args the command line arguments
@@ -774,7 +897,6 @@ public class Perawatan extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private KomponenGUI.JbuttonF JBKembali;
     private KomponenGUI.JbuttonF JBTambah;
-    private KomponenGUI.JbuttonF JBTambahTutup;
     private KomponenGUI.JbuttonF JBUbah;
     private KomponenGUI.JcomboboxF JCNamaBeautician;
     private KomponenGUI.JcomboboxF JCNamaDokter;
@@ -789,6 +911,7 @@ public class Perawatan extends javax.swing.JFrame {
     private KomponenGUI.JPlaceHolder JTJumlahTindakan;
     private KomponenGUI.JtextF JTKeluhanPasien;
     private KomponenGUI.JtextF JTNamaPasien;
+    private KomponenGUI.JtextF JTNoAntrian;
     private KomponenGUI.JtextF JTNoInvoice;
     private KomponenGUI.JtableF JTableObat;
     private KomponenGUI.JtableF JTableTindakan;
@@ -813,6 +936,8 @@ public class Perawatan extends javax.swing.JFrame {
     private KomponenGUI.JlableF jlableF18;
     private KomponenGUI.JlableF jlableF19;
     private KomponenGUI.JlableF jlableF2;
+    private KomponenGUI.JlableF jlableF20;
+    private KomponenGUI.JlableF jlableF21;
     private KomponenGUI.JlableF jlableF3;
     private KomponenGUI.JlableF jlableF4;
     private KomponenGUI.JlableF jlableF5;
@@ -883,8 +1008,75 @@ public class Perawatan extends javax.swing.JFrame {
         }
     }
 
-    void tambahData(boolean tutup) {
+    void tambahData() {
+        if (checkInput()) {
+            boolean Berhasil;
+            MultiInsert multiInsert = new MultiInsert();
+            Berhasil = multiInsert.OpenConnection();
+            if (Berhasil) {
+                Berhasil = multiInsert.setautocomit(false);
+                if (Berhasil) {
+                    Berhasil = multiInsert.Excute("INSERT INTO `tbperawatan`(`Tanggal`, `NoInvoice`, `NoAntrian`, `IdDokter`, `IdBeautician`, `Keluhan`, `Diagnosa`, `Catatan`) VALUES ('" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTNoInvoice.getText() + "', '" + JTNoAntrian.getText() + "', (SELECT `IdDokter` FROM `tbmdokter` WHERE `NamaDokter` = '" + JCNamaDokter.getSelectedItem() + "'),(SELECT `IdBeautician` FROM `tbmbeautician` WHERE `NamaBeautician` = '" + JCNamaBeautician.getSelectedItem() + "'),'" + JTKeluhanPasien.getText() + "','" + JTDiagnosaPasien.getText() + "','" + JTCatatanPasien.getText() + "')", null);
 
+                    if (Berhasil) {
+                        for (int i = 0; i < JTableTindakan.getRowCount(); i++) {
+                            Berhasil = multiInsert.Excute("INSERT INTO `tbperawatandetail`(`NoInvoice`, `IdTindakan`, `Jumlah`, `Harga`) VALUES ('" + JTNoInvoice.getText() + "',(SELECT `IdTindakan` FROM `tbmtindakan` WHERE `NamaTindakan` = '" + JTableTindakan.getValueAt(i, 0) + "'),'" + JTableTindakan.getValueAt(i, 1).toString().replace(".", "") + "','" + JTableTindakan.getValueAt(i, 2).toString().replace(".", "") + "')", null);
+                            if (Berhasil) {
+                                for (int j = 0; j < JTableObat.getRowCount(); j++) {
+                                    Berhasil = multiInsert.Excute("INSERT INTO `tbobatdetail`(`NoInvoice`, `IdObat`, `Jumlah`, `Harga`) VALUES ('" + JTNoInvoice.getText() + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTableObat.getValueAt(i, 0) + "'),'" + JTableObat.getValueAt(i, 1).toString().replace(".", "") + "','" + JTableObat.getValueAt(i, 2).toString().replace(".", "") + "')", null);
+                                    if (Berhasil) {
+                                        Berhasil = multiInsert.Excute("UPDATE `tbantrian` SET `Status` = 1 WHERE `NoAntrian` = '" + JTNoAntrian.getText() + "'", null);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                if (Berhasil == false) {
+                    multiInsert.rollback();
+                    multiInsert.closecon();
+                    JOptionPane.showMessageDialog(this, "Gagal Tambah Data Perawatan");
+                }
+                if (Berhasil == true) {
+                    JOptionPane.showMessageDialog(this, "Berhasil Tambah Data Perawatan");
+                    multiInsert.Commit();
+                    multiInsert.closecon();
+//                if (print) {
+//                    printing();
+//                }
+                    if (listPerawatan != null) {
+                        listPerawatan.load();
+                    }
+                    if (listAntrian != null) {
+                        listAntrian.load();
+                        if (listAntrian.jcomCari1.jtablef.getRowCount() == 0) {
+                            listAntrian.dispose();
+                        }
+                    }
+//                    JTableTindakan.setModel(new javax.swing.table.DefaultTableModel(
+//                            new Object[][]{}, new String[]{"Tindakan", "Jumlah", "Harga"}
+//                    ));
+//                    JTableTindakan.getColumnModel().getColumn(0).setPreferredWidth(668);
+//                    JTableTindakan.getColumnModel().getColumn(1).setPreferredWidth(105);
+//                    JCTindakan.requestFocus();
+//                    JTJumlahTindakan.setText("");
+//                    JTHargaTindakan.setText("");
+//                    JTableTindakan.clearSelection();
+//
+//                    JTableObat.setModel(new javax.swing.table.DefaultTableModel(
+//                            new Object[][]{}, new String[]{"Obat", "Jumlah", "Harga"}
+//                    ));
+//                    JTableObat.getColumnModel().getColumn(0).setPreferredWidth(668);
+//                    JTableObat.getColumnModel().getColumn(1).setPreferredWidth(105);
+//                    JCObat.requestFocus();
+//                    JTJumlahObat.setText("");
+//                    JTHargaObat.setText("");
+//                    JTableObat.clearSelection();
+//                    JTNoInvoice.setText(getNoInvoice());
+                    dispose();
+                }
+            }
+        }
     }
 
     void ubahData() {
@@ -895,17 +1087,17 @@ public class Perawatan extends javax.swing.JFrame {
             if (Berhasil) {
                 Berhasil = multiInsert.setautocomit(false);
                 if (Berhasil) {
-                    Berhasil = multiInsert.Excute("UPDATE `tbtindakan` SET `Tanggal`='" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',`NoInvoice`='" + JTNoInvoice.getText() + "',`IdDokter`=(SELECT `IdDokter` FROM `tbmdokter` WHERE `NamaDokter` = '" + JCNamaDokter.getSelectedItem() + "'),`IdBeautician`=(SELECT `IdBeautician` FROM `tbmbeautician` WHERE `NamaBeautician` = '" + JCNamaBeautician.getSelectedItem() + "'),`Keluhan`='" + JTKeluhanPasien.getText() + "',`Diagnosa`='" + JTDiagnosaPasien.getText() + "',`Catatan`='" + JTCatatanPasien.getText() + "' WHERE `IdTindakan` = '" + Parameter + "'", null);
+                    Berhasil = multiInsert.Excute("UPDATE `tbperawatan` SET `Tanggal`='" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',`NoInvoice`='" + JTNoInvoice.getText() + "',`NoAntrian`='" + JTNoAntrian.getText() + "',`IdDokter`=(SELECT `IdDokter` FROM `tbmdokter` WHERE `NamaDokter` = '" + JCNamaDokter.getSelectedItem() + "'),`IdBeautician`=(SELECT `IdBeautician` FROM `tbmbeautician` WHERE `NamaBeautician` = '" + JCNamaBeautician.getSelectedItem() + "'),`Keluhan`='" + JTKeluhanPasien.getText() + "',`Diagnosa`='" + JTDiagnosaPasien.getText() + "',`Catatan`='" + JTCatatanPasien.getText() + "' WHERE `IdPerawatan` = '" + Parameter + "'", null);
                     if (Berhasil) {
-                        Berhasil = multiInsert.Excute("DELETE FROM `tbtindakandetail` WHERE `NoInvoice` = '" + JTNoInvoice.getText() + "'", null);
+                        Berhasil = multiInsert.Excute("DELETE FROM `tbperawatandetail` WHERE `NoInvoice` = '" + JTNoInvoice.getText() + "'", null);
                         if (Berhasil) {
                             Berhasil = multiInsert.Excute("DELETE FROM `tbobatdetail` WHERE `NoInvoice` = '" + JTNoInvoice.getText() + "'", null);
                             if (Berhasil) {
                                 for (int i = 0; i < JTableTindakan.getRowCount(); i++) {
-                                    Berhasil = multiInsert.Excute("INSERT INTO `tbtindakandetail`(`NoInvoice`, `IdTindakan`, `Jumlah`, `Harga`) VALUES ('" + JTNoInvoice.getText() + "',(SELECT `IdTindakan` FROM `tbmtindakan` WHERE `NamaTindakan` = '" + JTableTindakan.getValueAt(i, 0) + "'),'" + JTableTindakan.getValueAt(i, 1) + "','" + JTableTindakan.getValueAt(i, 2) + "')", null);
+                                    Berhasil = multiInsert.Excute("INSERT INTO `tbperawatandetail`(`NoInvoice`, `IdTindakan`, `Jumlah`, `Harga`) VALUES ('" + JTNoInvoice.getText() + "',(SELECT `IdTindakan` FROM `tbmtindakan` WHERE `NamaTindakan` = '" + JTableTindakan.getValueAt(i, 0) + "'),'" + JTableTindakan.getValueAt(i, 1).toString().replace(".", "") + "','" + JTableTindakan.getValueAt(i, 2).toString().replace(".", "") + "')", null);
                                     if (Berhasil) {
                                         for (int j = 0; j < JTableObat.getRowCount(); j++) {
-                                            Berhasil = multiInsert.Excute("INSERT INTO `tbobatdetail`(`NoInvoice`, `IdBarang`, `Jumlah`, `Harga`) VALUES ('" + JTNoInvoice.getText() + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTableObat.getValueAt(i, 0) + "'),'" + JTableObat.getValueAt(i, 1) + "','" + JTableObat.getValueAt(i, 2) + "')", null);
+                                            Berhasil = multiInsert.Excute("INSERT INTO `tbobatdetail`(`NoInvoice`, `IdObat`, `Jumlah`, `Harga`) VALUES ('" + JTNoInvoice.getText() + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTableObat.getValueAt(i, 0) + "'),'" + JTableObat.getValueAt(i, 1).toString().replace(".", "") + "','" + JTableObat.getValueAt(i, 2).toString().replace(".", "") + "')", null);
                                         }
                                     }
                                 }
@@ -919,16 +1111,16 @@ public class Perawatan extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Gagal Ubah Data Perawatan");
                 }
                 if (Berhasil == true) {
-                    JOptionPane.showMessageDialog(this, "Berhasil Ubah Data Penjualan");
+                    JOptionPane.showMessageDialog(this, "Berhasil Ubah Data Perawatan");
                     multiInsert.Commit();
                     multiInsert.closecon();
 //                if (print) {
 //                    printing();
 //                }
                     dispose();
-                    ubahPenjualan = null;
-                    if (listPenjualan != null) {
-                        listPenjualan.load();
+                    ubahPerawatan = null;
+                    if (listPerawatan != null) {
+                        listPerawatan.load();
                     }
                 }
             }

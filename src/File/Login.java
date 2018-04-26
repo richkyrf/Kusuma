@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import static javax.swing.UIManager.setLookAndFeel;
 import static GlobalVar.Var.*;
+import KomponenGUI.FDateF;
+import java.util.Date;
 
 /**
  *
@@ -198,7 +200,7 @@ public class Login extends javax.swing.JFrame {
             GlobalVar.VarL.password = list.get(1);
             GlobalVar.VarL.level = list.get(2);
             if (list.get(0) != null) {
-                new DBReadThreadAndGUITest();
+                new MenuUtama();
                 dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Gagal Login. Silahkan Ulangi . . .", "Error", JOptionPane.ERROR_MESSAGE);

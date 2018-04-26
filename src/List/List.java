@@ -61,7 +61,7 @@ public class List extends javax.swing.JFrame {
             case "Antrian":
                 setTitle("List Antrian");
                 JBRegister.setVisible(true);
-                JBRegister.setText("Tindakan");
+                JBRegister.setText("Perawatan");
                 JBTambah.setVisible(false);
                 JBUbah.setVisible(false);
                 JBHapus.setText("Batal");
@@ -78,8 +78,9 @@ public class List extends javax.swing.JFrame {
             case "Penyesuaian Stok":
                 setTitle("Penyesuaian Stok");
                 break;
-            case "Tindakan":
-                setTitle("List Tindakan");
+            case "Perawatan":
+                setTitle("List Perawatan");
+                JBTambah.setVisible(false);
                 break;
             default:
                 throw new AssertionError();
@@ -126,15 +127,15 @@ public class List extends javax.swing.JFrame {
         }
     }
 
-    void tambahTindakan() {
+    void tambahPerawatan() {
         if (jcomCari1.getSelectedRow() < 0) {
             JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Terlebih Dahulu", "Information", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            if (tambahTindakan == null) {
-                tambahTindakan = new Perawatan("Antrian", jcomCari1.GetIDTable1());
+            if (tambahPerawatan == null) {
+                tambahPerawatan = new Perawatan("Antrian", jcomCari1.GetIDTable1());
             } else {
-                tambahTindakan.setState(NORMAL);
-                tambahTindakan.toFront();
+                tambahPerawatan.setState(NORMAL);
+                tambahPerawatan.toFront();
             }
         }
     }
@@ -320,6 +321,9 @@ public class List extends javax.swing.JFrame {
             case "Penyesuaian Stok":
                 listPenyesuaianStok = null;
                 break;
+            case "Perawatan":
+                listPerawatan = null;
+                break;
             default:
                 throw new AssertionError();
         }
@@ -327,7 +331,7 @@ public class List extends javax.swing.JFrame {
 
     private void JBRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBRegisterActionPerformed
         if (Type.equals("Antrian")) {
-            tambahTindakan();
+            tambahPerawatan();
         } else {
             tambahantrian();
         }
@@ -388,7 +392,7 @@ public class List extends javax.swing.JFrame {
     private KomponenGUI.JbuttonF JBTambah;
     private KomponenGUI.JbuttonF JBUbah;
     private KomponenGUI.JbuttonF jbuttonF4;
-    private KomponenGUI.JcomCari jcomCari1;
+    public static KomponenGUI.JcomCari jcomCari1;
     private KomponenGUI.JlableF jlableF1;
     private KomponenGUI.JtextF jtextF1;
     // End of variables declaration//GEN-END:variables
@@ -466,11 +470,13 @@ public class List extends javax.swing.JFrame {
                 break;
             case "Penyesuaian Stok":
                 if (tambahPenyesuaianStok == null) {
-                    tambahPenyesuaianStok = new PenyesuaianStok("Penyesuaian Stok");
+                    tambahPenyesuaianStok = new PenyesuaianStok();
                 } else {
                     tambahPenyesuaianStok.setState(NORMAL);
                     tambahPenyesuaianStok.toFront();
                 }
+                break;
+            case "Perawatan":
                 break;
             default:
                 throw new AssertionError();
@@ -510,6 +516,9 @@ public class List extends javax.swing.JFrame {
                     break;
                 case "Barang Masuk":
                     berhasil = delete.Hapus(jcomCari1.GetIDTable(), "DELETE FROM `tbbarangmasuk` WHERE `IdBarangMasuk` = " + jcomCari1.GetIDTable(), "Barang Masuk", this);
+                    break;
+                case "Perawatan":
+                    berhasil = delete.Hapus(jcomCari1.GetIDTable(), "DELETE FROM `tbperawatan` WHERE `IdPerawatan` = " + jcomCari1.GetIDTable(), "Perawatan", this);
                     break;
                 default:
                     throw new AssertionError();
@@ -589,6 +598,14 @@ public class List extends javax.swing.JFrame {
                         ubahBarangMasuk.toFront();
                     }
                     break;
+                case "Perawatan":
+                    if (ubahPerawatan == null) {
+                        ubahPerawatan = new Perawatan("Ubah", jcomCari1.GetIDTable());
+                    } else {
+                        ubahPerawatan.setState(NORMAL);
+                        ubahPerawatan.toFront();
+                    }
+                    break;
                 default:
                     throw new AssertionError();
             }
@@ -607,7 +624,7 @@ public class List extends javax.swing.JFrame {
                 jcomCari1.setOrder(" ORDER BY `NamaDokter` ");
                 break;
             case "Master Pasien":
-                jcomCari1.setQuery("SELECT a.`IdPasien` as 'ID', `KodePasien` as 'Kode', `NamaPasien` as 'Nama', `JenisKelamin` as 'Jenis Kelamin', DATE_FORMAT(`TanggalDaftar`,'%d-%m-%Y') as 'Tanggal Daftar', DATE_FORMAT(`TanggaLahir`,'%d-%m-%Y') as 'Tanggal Lahir', `NoTelpon` as 'No. Telpon', `Pekerjaan`, `Email`, `Alamat`, `Catatan`, `NoKartu`, IF(`NoAntrian` IS NOT NULL AND `Tanggal` = CURDATE(),'Antri','Tidak') as 'Antrian' FROM `tbmpasien`a LEFT JOIN `tbantrian`b ON a.`IdPasien`=b.`IdPasien` WHERE 1");
+                jcomCari1.setQuery("SELECT a.`IdPasien` as 'ID', `KodePasien` as 'Kode', `NamaPasien` as 'Nama', `JenisKelamin` as 'Jenis Kelamin', DATE_FORMAT(`TanggalDaftar`,'%d-%m-%Y') as 'Tanggal Daftar', DATE_FORMAT(`TanggaLahir`,'%d-%m-%Y') as 'Tanggal Lahir', `NoTelpon` as 'No. Telpon', `Pekerjaan`, `Email`, `Alamat`, `Catatan`, `NoKartu`, IF((`NoAntrian` IS NOT NULL AND `Tanggal` = CURDATE()) AND b.`Status` = 0,'Antri','Tidak') as 'Antrian' FROM `tbmpasien`a LEFT JOIN `tbantrian`b ON a.`IdPasien`=b.`IdPasien` WHERE 1");
                 jcomCari1.jtablef.useColor(true);
                 jcomCari1.setOrder(" ORDER BY `NamaPasien`, a.`IdPasien` ");
                 jcomCari1.setSelectedIndex(11);
@@ -621,7 +638,7 @@ public class List extends javax.swing.JFrame {
                 jcomCari1.setOrder(" ORDER BY `NamaTindakan` ");
                 break;
             case "Antrian":
-                jcomCari1.setQuery("SELECT `NoAntrian`, `KodePasien` as 'Kode', `NamaPasien` as 'Nama', `JenisKelamin` as 'Jenis Kelamin', DATE_FORMAT(`TanggalDaftar`,'%d-%m-%Y') as 'Tanggal Daftar', DATE_FORMAT(`TanggaLahir`,'%d-%m-%Y') as 'Tanggal Lahir', `NoTelpon` as 'No. Telpon', `Pekerjaan`, `Email`, `Alamat`, `Catatan`, `NoKartu` FROM `tbmpasien`a LEFT JOIN `tbantrian`b ON a.`IdPasien`=b.`IdPasien` WHERE `IdAntrian` IS NOT NULL AND `Tanggal` = CURDATE()");
+                jcomCari1.setQuery("SELECT `NoAntrian`, `KodePasien` as 'Kode', `NamaPasien` as 'Nama', `JenisKelamin` as 'Jenis Kelamin', DATE_FORMAT(`TanggalDaftar`,'%d-%m-%Y') as 'Tanggal Daftar', DATE_FORMAT(`TanggaLahir`,'%d-%m-%Y') as 'Tanggal Lahir', `NoTelpon` as 'No. Telpon', `Pekerjaan`, `Email`, `Alamat`, `Catatan`, `NoKartu` FROM `tbmpasien`a LEFT JOIN `tbantrian`b ON a.`IdPasien`=b.`IdPasien` WHERE `IdAntrian` IS NOT NULL AND `Tanggal` = CURDATE() AND b.`Status` = 0");
                 jcomCari1.setOrder(" ORDER BY `NoAntrian` ");
                 break;
             case "Master Pemasok":
@@ -639,6 +656,10 @@ public class List extends javax.swing.JFrame {
             case "Penyesuaian Stok":
                 jcomCari1.setQuery("SELECT `IdPenyesuaian` as 'ID', `NoPenyesuaian` as 'No. Penyesuaian', DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', IFNULL(`NamaBarang`,'-') as 'Nama Barang', `Jumlah`, a.`Keterangan` FROM `tbpenyesuaianstok`a LEFT JOIN `tbmbarang`b ON a.`IdBarangLain`=b.`IdBarang` WHERE 1");
                 jcomCari1.setOrder(" ORDER BY `NoPenyesuaian` DESC ");
+                break;
+            case "Perawatan":
+                jcomCari1.setQuery("SELECT `IdPerawatan` as 'ID', DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NoInvoice` as 'No. Invoice', `NamaDokter` as 'Nama Dokter', `NamaBeautician` as 'Nama Beautician', `Keluhan`, `Diagnosa`, `Catatan` FROM `tbperawatan`a JOIN `tbmdokter`b ON a.`IdDokter`=b.`IdDokter` JOIN `tbmbeautician`c ON a.`IdBeautician`=c.`IdBeautician` WHERE 1");
+                jcomCari1.setOrder(" ORDER BY `NoInvoice` DESC ");
                 break;
             default:
                 throw new AssertionError();

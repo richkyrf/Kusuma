@@ -35,10 +35,7 @@ public class PenyesuaianStok extends javax.swing.JFrame {
     /**
      * Creates new form PenyesuaianStok
      */
-    String Type;
-
-    public PenyesuaianStok(String type) {
-        Type = type;
+    public PenyesuaianStok() {
         initComponents();
         JTNoPenyesuaian.setText(getNoPenyesuaianStok());
         JCNamaBarang.requestFocus();
@@ -355,7 +352,7 @@ public class PenyesuaianStok extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PenyesuaianStok("").setVisible(true);
+                new PenyesuaianStok().setVisible(true);
             }
         });
     }
@@ -464,14 +461,17 @@ public class PenyesuaianStok extends javax.swing.JFrame {
 
     void sesuaikan() {
         if (checkInput()) {
+            Boolean berhasil;
             Insert insert = new LSubProces.Insert();
-            insert.simpan("INSERT INTO `tbpenyesuaianstok` (`NoPenyesuaian`, `Tanggal`, `IdBarangLain`, `Jumlah`, `Keterangan`) VALUES ('" + JTNoPenyesuaian.getText() + "', '" + FDateF.datetostr(JDTanggalPenyesuaian.getDate(), "yyyy-MM-dd") + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'),'" + (Float.parseFloat(JTStokBaruKG.getText().replace(".", "")) - Float.parseFloat(JTStokLamaKG.getText().replace(".", "").replace(",", "."))) + "','" + JTAKeterangan.getText() + "')", "Penyesuaian Barang Stok", null);
-            JTStokLamaKG.setText("0");
-            JTStokBaruKG.setText("0");
-            JTAKeterangan.setText("");
-            JTNoPenyesuaian.setText(getNoPenyesuaianStok());
-            JCNamaBarang.setSelectedIndex(0);
-            JCNamaBarang.requestFocus();
+            berhasil = insert.simpan("INSERT INTO `tbpenyesuaianstok` (`NoPenyesuaian`, `Tanggal`, `IdBarangLain`, `Jumlah`, `Keterangan`) VALUES ('" + JTNoPenyesuaian.getText() + "', '" + FDateF.datetostr(JDTanggalPenyesuaian.getDate(), "yyyy-MM-dd") + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JCNamaBarang.getSelectedItem() + "'),'" + (Float.parseFloat(JTStokBaruKG.getText().replace(".", "")) - Float.parseFloat(JTStokLamaKG.getText().replace(".", "").replace(",", "."))) + "','" + JTAKeterangan.getText() + "')", "Penyesuaian Barang Stok", null);
+            if (berhasil) {
+                JTStokLamaKG.setText("0");
+                JTStokBaruKG.setText("0");
+                JTAKeterangan.setText("");
+                JTNoPenyesuaian.setText(getNoPenyesuaianStok());
+                JCNamaBarang.setSelectedIndex(0);
+                JCNamaBarang.requestFocus();
+            }
         }
     }
 }
