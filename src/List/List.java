@@ -82,6 +82,11 @@ public class List extends javax.swing.JFrame {
                 setTitle("List Perawatan");
                 JBTambah.setVisible(false);
                 break;
+            case "Billing":
+                setTitle("List Billing");
+                JBTambah.setVisible(false);
+                JBUbah.setVisible(false);
+                break;
             default:
                 throw new AssertionError();
         }
@@ -324,6 +329,9 @@ public class List extends javax.swing.JFrame {
             case "Perawatan":
                 listPerawatan = null;
                 break;
+            case "Billing":
+                listBilling = null;
+                break;
             default:
                 throw new AssertionError();
         }
@@ -509,7 +517,7 @@ public class List extends javax.swing.JFrame {
                     berhasil = delete.Hapus(jcomCari1.GetIDTable(), "DELETE FROM `tbantrian` WHERE `NoAntrian` = " + jcomCari1.GetIDTable() + " AND `Tanggal` = CURDATE()", "Antrian", this);
                     break;
                 case "Master Pemasok":
-                    berhasil = delete.Hapus(jcomCari1.GetIDTable(), "DELETE FROM `tbnoenasok` WHERE `IdPemasok` = " + jcomCari1.GetIDTable(), "Pemasok", this);
+                    berhasil = delete.Hapus(jcomCari1.GetIDTable(), "DELETE FROM `tbmpemasok` WHERE `IdPemasok` = " + jcomCari1.GetIDTable(), "Pemasok", this);
                     break;
                 case "Penjualan":
                     berhasil = delete.Hapus(jcomCari1.GetIDTable(), "DELETE FROM `tbpenjualan` WHERE `IdPenjualan` = " + jcomCari1.GetIDTable(), "Penjualan", this);

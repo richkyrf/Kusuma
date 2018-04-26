@@ -165,9 +165,6 @@ public class Perawatan extends javax.swing.JFrame {
         } else if (JCNamaDokter.getSelectedIndex() == 0) {
             JOptionPane.showMessageDialog(this, "Silahkan Pilih Nama Dokter Terlebih Dahulu.");
             return false;
-        } else if (JCNamaBeautician.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Silahkan Pilih Nama Beautician Terlebih Dahulu.");
-            return false;
         } else if (JTableTindakan.getRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "Silahkan Isi Tindakan Terlebih Dahulu.");
             return false;
@@ -1017,7 +1014,6 @@ public class Perawatan extends javax.swing.JFrame {
                 Berhasil = multiInsert.setautocomit(false);
                 if (Berhasil) {
                     Berhasil = multiInsert.Excute("INSERT INTO `tbperawatan`(`Tanggal`, `NoInvoice`, `NoAntrian`, `IdDokter`, `IdBeautician`, `Keluhan`, `Diagnosa`, `Catatan`) VALUES ('" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTNoInvoice.getText() + "', '" + JTNoAntrian.getText() + "', (SELECT `IdDokter` FROM `tbmdokter` WHERE `NamaDokter` = '" + JCNamaDokter.getSelectedItem() + "'),(SELECT `IdBeautician` FROM `tbmbeautician` WHERE `NamaBeautician` = '" + JCNamaBeautician.getSelectedItem() + "'),'" + JTKeluhanPasien.getText() + "','" + JTDiagnosaPasien.getText() + "','" + JTCatatanPasien.getText() + "')", null);
-
                     if (Berhasil) {
                         for (int i = 0; i < JTableTindakan.getRowCount(); i++) {
                             Berhasil = multiInsert.Excute("INSERT INTO `tbperawatandetail`(`NoInvoice`, `IdTindakan`, `Jumlah`, `Harga`) VALUES ('" + JTNoInvoice.getText() + "',(SELECT `IdTindakan` FROM `tbmtindakan` WHERE `NamaTindakan` = '" + JTableTindakan.getValueAt(i, 0) + "'),'" + JTableTindakan.getValueAt(i, 1).toString().replace(".", "") + "','" + JTableTindakan.getValueAt(i, 2).toString().replace(".", "") + "')", null);
@@ -1126,5 +1122,4 @@ public class Perawatan extends javax.swing.JFrame {
             }
         }
     }
-
 }

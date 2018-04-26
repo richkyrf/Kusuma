@@ -566,7 +566,16 @@ public class MenuUtama extends javax.swing.JFrame {
     }//GEN-LAST:event_jbuttonF4ActionPerformed
 
     private void jbuttonF5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF5ActionPerformed
-        // TODO add your handling code here:
+        if (jlableF5.getText().split("\\: ")[1].equals("0")) {
+            JOptionPane.showMessageDialog(this, "Belum Ada Billing.");
+        } else {
+            if (listBilling == null) {
+                listBilling = new List("Billing");
+            } else {
+                listBilling.setState(NORMAL);
+                listBilling.toFront();
+            }
+        }
     }//GEN-LAST:event_jbuttonF5ActionPerformed
 
     /**
