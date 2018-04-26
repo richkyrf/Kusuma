@@ -73,6 +73,7 @@ public class MenuUtama extends javax.swing.JFrame {
         JMProses = new javax.swing.JMenu();
         JMIProsesAbsenKaryawan = new javax.swing.JMenuItem();
         JMIProsesPacking = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         JMList = new javax.swing.JMenu();
@@ -295,6 +296,14 @@ public class MenuUtama extends javax.swing.JFrame {
             }
         });
         JMProses.add(JMIProsesPacking);
+
+        jMenuItem9.setText("3. Billing");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
+        JMProses.add(jMenuItem9);
 
         jMenuItem5.setText("3. Barang Masuk");
         jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
@@ -569,14 +578,27 @@ public class MenuUtama extends javax.swing.JFrame {
         if (jlableF5.getText().split("\\: ")[1].equals("0")) {
             JOptionPane.showMessageDialog(this, "Belum Ada Billing.");
         } else {
-            if (listBilling == null) {
-                listBilling = new List("Billing");
+            if (listAntrianBilling == null) {
+                listAntrianBilling = new List("Antrian Billing");
             } else {
-                listBilling.setState(NORMAL);
-                listBilling.toFront();
+                listAntrianBilling.setState(NORMAL);
+                listAntrianBilling.toFront();
             }
         }
     }//GEN-LAST:event_jbuttonF5ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        if (jlableF5.getText().split("\\: ")[1].equals("0")) {
+            JOptionPane.showMessageDialog(this, "Belum Ada Billing.");
+        } else {
+            if (listAntrianBilling == null) {
+                listAntrianBilling = new List("Antrian Billing");
+            } else {
+                listAntrianBilling.setState(NORMAL);
+                listAntrianBilling.toFront();
+            }
+        }
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -639,20 +661,15 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private KomponenGUI.JbuttonF jbuttonF1;
-    private KomponenGUI.JbuttonF jbuttonF2;
-    private KomponenGUI.JbuttonF jbuttonF3;
     private KomponenGUI.JbuttonF jbuttonF4;
     private KomponenGUI.JbuttonF jbuttonF5;
     public static KomponenGUI.JlableF jlableF1;
-    public static KomponenGUI.JlableF jlableF2;
-    private KomponenGUI.JlableF jlableF3;
-    public static KomponenGUI.JlableF jlableF4;
+    public static KomponenGUI.JlableF jlableF3;
     public static KomponenGUI.JlableF jlableF5;
     // End of variables declaration//GEN-END:variables
 }

@@ -12,15 +12,10 @@ import static GlobalVar.Var.*;
 import KomponenGUI.FDateF;
 import LSubProces.DRunSelctOne;
 import LSubProces.Insert;
-import static Master.MasterPasien.JCJenisKelamin;
-import Proses.BarangMasuk;
-import Proses.Penjualan;
-import Proses.PenyesuaianStok;
-import Proses.Perawatan;
+import Proses.*;
 import static java.awt.Frame.NORMAL;
 import java.util.ArrayList;
 import java.util.Date;
-import javax.swing.JFrame;
 import javax.swing.RowFilter;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -82,10 +77,13 @@ public class List extends javax.swing.JFrame {
                 setTitle("List Perawatan");
                 JBTambah.setVisible(false);
                 break;
-            case "Billing":
+            case "Antrian Billing":
                 setTitle("List Billing");
+                JBRegister.setVisible(true);
+                JBRegister.setText("Billing");
                 JBTambah.setVisible(false);
                 JBUbah.setVisible(false);
+                JBHapus.setVisible(false);
                 break;
             default:
                 throw new AssertionError();
@@ -107,15 +105,12 @@ public class List extends javax.swing.JFrame {
         if (list.get(0).equals("0")) {
             NoAntrian = "1";
         } else {
-            dRunSelctOne.seterorm("Gagal getNoAntrian()");
-            dRunSelctOne.setQuery("SELECT `NoAntrian` FROM `tbantrian` WHERE `Tanggal` = '" + FDateF.datetostr(new Date(), "yyyy-MM-dd") + "' ORDER BY `NoAntrian` DESC ");
-            ArrayList<String> list2 = dRunSelctOne.excute();
-            NoAntrian = String.valueOf(Integer.valueOf(list2.get(0)) + 1);
+            NoAntrian = String.valueOf(Integer.valueOf(list.get(0)) + 1);
         }
         return NoAntrian;
     }
 
-    void tambahantrian() {
+    void tambahAntrian() {
         if (jcomCari1.getSelectedRow() < 0) {
             JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Terlebih Dahulu", "Information", JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -141,6 +136,19 @@ public class List extends javax.swing.JFrame {
             } else {
                 tambahPerawatan.setState(NORMAL);
                 tambahPerawatan.toFront();
+            }
+        }
+    }
+
+    void tambahBilling() {
+        if (jcomCari1.getSelectedRow() < 0) {
+            JOptionPane.showMessageDialog(this, "Silahkan Pilih Data Terlebih Dahulu", "Information", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            if (tambahBilling == null) {
+                tambahBilling = new Billing("Antrian Billing", jcomCari1.GetIDTable());
+            } else {
+                tambahBilling.setState(NORMAL);
+                tambahBilling.toFront();
             }
         }
     }
@@ -329,8 +337,8 @@ public class List extends javax.swing.JFrame {
             case "Perawatan":
                 listPerawatan = null;
                 break;
-            case "Billing":
-                listBilling = null;
+            case "Antrian Billing":
+                listAntrianBilling = null;
                 break;
             default:
                 throw new AssertionError();
@@ -338,11 +346,7 @@ public class List extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosed
 
     private void JBRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBRegisterActionPerformed
-        if (Type.equals("Antrian")) {
-            tambahPerawatan();
-        } else {
-            tambahantrian();
-        }
+        register();
     }//GEN-LAST:event_JBRegisterActionPerformed
 
     private void jtextF1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtextF1KeyReleased
@@ -408,6 +412,22 @@ public class List extends javax.swing.JFrame {
     void refreshAll() {
 //        jcomCari1.refresh();
         load();
+    }
+
+    void register() {
+        switch (Type) {
+            case "Master Pasien":
+                tambahAntrian();
+                break;
+            case "Antrian":
+                tambahPerawatan();
+                break;
+            case "Antrian Billing":
+                tambahBilling();
+                break;
+            default:
+                throw new AssertionError();
+        }
     }
 
     void tambah() {
@@ -666,8 +686,16 @@ public class List extends javax.swing.JFrame {
                 jcomCari1.setOrder(" ORDER BY `NoPenyesuaian` DESC ");
                 break;
             case "Perawatan":
-                jcomCari1.setQuery("SELECT `IdPerawatan` as 'ID', DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NoInvoice` as 'No. Invoice', `NamaDokter` as 'Nama Dokter', `NamaBeautician` as 'Nama Beautician', `Keluhan`, `Diagnosa`, `Catatan` FROM `tbperawatan`a JOIN `tbmdokter`b ON a.`IdDokter`=b.`IdDokter` JOIN `tbmbeautician`c ON a.`IdBeautician`=c.`IdBeautician` WHERE 1");
+                jcomCari1.setQuery("SELECT `IdPerawatan` as 'ID', DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NoInvoice` as 'No. Invoice', `NoAntrian` as 'No Antrian', `NamaDokter` as 'Nama Dokter', `NamaBeautician` as 'Nama Beautician', `Keluhan`, `Diagnosa`, `Catatan` FROM `tbperawatan`a JOIN `tbmdokter`b ON a.`IdDokter`=b.`IdDokter` LEFT JOIN `tbmbeautician`c ON a.`IdBeautician`=c.`IdBeautician` WHERE 1");
                 jcomCari1.setOrder(" ORDER BY `NoInvoice` DESC ");
+                break;
+            case "Antrian Billing":
+                jcomCari1.setQuery("SELECT b.`NoAntrian`, `KodePasien` as 'Kode', `NamaPasien` as 'Nama', `JenisKelamin` as 'Jenis Kelamin', DATE_FORMAT(`TanggalDaftar`,'%d-%m-%Y') as 'Tanggal Daftar', DATE_FORMAT(`TanggaLahir`,'%d-%m-%Y') as 'Tanggal Lahir', `NoTelpon` as 'No. Telpon', `Pekerjaan`, `Email`, `Alamat`, a.`Catatan`, `NoKartu` FROM `tbmpasien`a LEFT JOIN `tbantrian`b ON a.`IdPasien`=b.`IdPasien` LEFT JOIN `tbperawatan`c ON b.`NoAntrian`=c.`NoAntrian` AND b.`Tanggal`=c.`Tanggal` LEFT JOIN `tbbilling`d ON c.`NoInvoice`=d.`NoInvoice` WHERE `IdAntrian` IS NOT NULL AND b.`Tanggal` = CURDATE() AND b.`Status` = 1 AND `IdBilling` IS NULL");
+                jcomCari1.setOrder(" ORDER BY `NoAntrian` ");
+                break;
+            case "Billing":
+                jcomCari1.setQuery("SELECT `IdBilling` as 'ID', `NoBilling` as 'No. Billing', DATE_FORMAT(`Tanggal`,'%d-%m-%Y') as 'Tanggal', `NoInvoice` as 'No. Invoice', FORMAT(`Bayar`,0) as 'Jumlah Bayar' FROM `tbbilling` WHERE 1");
+                jcomCari1.setOrder(" ORDER BY `NoBilling` DESC ");
                 break;
             default:
                 throw new AssertionError();
