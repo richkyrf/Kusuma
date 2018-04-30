@@ -48,7 +48,8 @@ import static javax.print.attribute.standard.MediaSize.findMedia;
 import static javax.print.attribute.standard.OrientationRequested.LANDSCAPE;
 import javax.print.event.PrintJobAdapter;
 import javax.print.event.PrintJobEvent;
-import FunctionGUI.JOptionPaneF;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
@@ -125,7 +126,7 @@ public class BarangMasuk extends javax.swing.JFrame {
             }
         } catch (SQLException e) {
             out.println("E6" + e);
-            JOptionPaneF.showMessageDialog(null, "Gagal Panggil Data Detail Barang Masuk");
+            showMessageDialog(null, "Gagal Panggil Data Detail Barang Masuk");
         } finally {
             runSelct.closecon();
         }
@@ -134,10 +135,10 @@ public class BarangMasuk extends javax.swing.JFrame {
 
     Boolean checkInput() {
         if (JDTanggal.getDate() == null) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Tanggal Barang Masuk Tidak Boleh Kosong");
+            JOptionPane.showMessageDialog(this, "Tanggal Barang Masuk Tidak Boleh Kosong");
             return false;
         } else if (JTable.getRowCount() < 1) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Detail Barang Masuk Tidak Boleh Kosong");
+            JOptionPane.showMessageDialog(this, "Detail Barang Masuk Tidak Boleh Kosong");
             return false;
         } else {
             return true;
@@ -173,7 +174,7 @@ public class BarangMasuk extends javax.swing.JFrame {
             }
         } catch (SQLException e) {
             out.println("E6" + e);
-            JOptionPaneF.showMessageDialog(null, "Gagal Generate Nomor Barang Masuk");
+            showMessageDialog(null, "Gagal Generate Nomor Barang Masuk");
         } finally {
             runSelct.closecon();
         }
@@ -182,26 +183,26 @@ public class BarangMasuk extends javax.swing.JFrame {
 
     boolean checkTable() {
         if (JTNamaBarang.getText().replace(" ", "").isEmpty()) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Nama Barang Tidak Boleh Kosong");
+            JOptionPane.showMessageDialog(this, "Nama Barang Tidak Boleh Kosong");
             JTNamaBarang.requestFocus();
             return false;
         } else if (JTJumlah.getInt() == 0) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Jumlah Tidak Boleh Kosong");
+            JOptionPane.showMessageDialog(this, "Jumlah Tidak Boleh Kosong");
             JTJumlah.requestFocus();
             return false;
         } else if (JTHargaSatuan.getInt() == 0) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Harga Satuan Tidak Boleh Kosong");
+            JOptionPane.showMessageDialog(this, "Harga Satuan Tidak Boleh Kosong");
             JTHargaSatuan.requestFocus();
             return false;
         } else if (JTable.getRowCount() > 10) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Jenis Barang Yang Diinput Tidak Bisa Lebih Dari 10");
+            JOptionPane.showMessageDialog(this, "Jenis Barang Yang Diinput Tidak Bisa Lebih Dari 10");
             return false;
         } else if (JTJumlah.getInt() > Float.parseFloat(JTStock.getText().replace(".", "").replace(",", "."))) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Jumlah Permintaan Tidak Bisa Melebihi Stok");
+            JOptionPane.showMessageDialog(this, "Jumlah Permintaan Tidak Bisa Melebihi Stok");
             JTJumlah.requestFocus();
             return false;
         } else if (cekdoubleitem(JTNamaBarang.getText()) && tambahtable.isEnabled()) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Tidak Bisa Input Barang Yang Sama");
+            JOptionPane.showMessageDialog(this, "Tidak Bisa Input Barang Yang Sama");
             JTNamaBarang.requestFocus();
             return false;
         } else {
@@ -783,7 +784,7 @@ public class BarangMasuk extends javax.swing.JFrame {
             for (int a = 0; a < JTable.getRowCount(); a++) {
                 JTable.setValueAt(a + 1, a, 0);
             }
-            JOptionPaneF.showMessageDialog(this, "Berhasil Hapus Data");
+            JOptionPane.showMessageDialog(this, "Berhasil Hapus Data");
             RefreshTbl();
         }
         JTNamaBarang.requestFocus();
@@ -984,7 +985,7 @@ public class BarangMasuk extends javax.swing.JFrame {
         if (checkTable()) {
             DefaultTableModel model = (DefaultTableModel) JTable.getModel();
             model.addRow(new Object[]{JTable.getRowCount() + 1, JTNamaBarang.getText(), JTJumlah.getText(), Intformatdigit(JTHargaSatuan.getInt()), JTSubTotal.getText()});
-            JOptionPaneF.showMessageDialog(this, "Berhasil Tambah Detail Barang Masuk");
+            JOptionPane.showMessageDialog(this, "Berhasil Tambah Detail Barang Masuk");
             JTNamaBarang.requestFocus();
             RefreshTbl();
             JTGrandTotal.setText(String.valueOf(getGrandTotal()));
@@ -997,7 +998,7 @@ public class BarangMasuk extends javax.swing.JFrame {
             JTable.setValueAt(JTJumlah.getText(), JTable.getSelectedRow(), 2);
             JTable.setValueAt(Intformatdigit(JTHargaSatuan.getInt()), JTable.getSelectedRow(), 3);
             JTable.setValueAt(JTSubTotal.getText(), JTable.getSelectedRow(), 4);
-            JOptionPaneF.showMessageDialog(this, "Berhasil Ubah Data");
+            JOptionPane.showMessageDialog(this, "Berhasil Ubah Data");
             RefreshTbl();
             JTNamaBarang.requestFocus();
             JTGrandTotal.setText(String.valueOf(getGrandTotal()));
@@ -1023,10 +1024,10 @@ public class BarangMasuk extends javax.swing.JFrame {
             if (Berhasil == false) {
                 multiInsert.rollback();
                 multiInsert.closecon();
-                JOptionPaneF.showMessageDialog(this, "Gagal Tambah Data Barang Masuk");
+                JOptionPane.showMessageDialog(this, "Gagal Tambah Data Barang Masuk");
             }
             if (Berhasil == true) {
-                JOptionPaneF.showMessageDialog(this, "Berhasil Tambah Data Barang Masuk");
+                JOptionPane.showMessageDialog(this, "Berhasil Tambah Data Barang Masuk");
                 multiInsert.Commit();
                 multiInsert.closecon();
                 if (print) {
@@ -1076,10 +1077,10 @@ public class BarangMasuk extends javax.swing.JFrame {
             if (Berhasil == false) {
                 multiInsert.rollback();
                 multiInsert.closecon();
-                JOptionPaneF.showMessageDialog(this, "Gagal Ubah Data Barang Masuk");
+                JOptionPane.showMessageDialog(this, "Gagal Ubah Data Barang Masuk");
             }
             if (Berhasil == true) {
-                JOptionPaneF.showMessageDialog(this, "Berhasil Ubah Data Barang Masuk");
+                JOptionPane.showMessageDialog(this, "Berhasil Ubah Data Barang Masuk");
                 multiInsert.Commit();
                 multiInsert.closecon();
                 if (print) {

@@ -20,7 +20,8 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import FunctionGUI.JOptionPaneF;
+import javax.swing.JOptionPane;
+import static javax.swing.JOptionPane.showMessageDialog;
 import static javax.swing.WindowConstants.DISPOSE_ON_CLOSE;
 
 /**
@@ -47,14 +48,14 @@ public class PenyesuaianStok extends javax.swing.JFrame {
 
     boolean checkInput() {
         if (JCNamaBarang.getSelectedIndex() == 0) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Silahkan Pilih Nama Barang Terlebih Dahulu.");
+            JOptionPane.showMessageDialog(this, "Silahkan Pilih Nama Barang Terlebih Dahulu.");
             JCNamaBarang.requestFocus();
             return false;
         } else if ((Integer.valueOf(JTStokBaruKG.getText().replace(".", "")) - Integer.valueOf(JTStokLamaKG.getText().replace(".", "").replace(",", "."))) == 0) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Stok Baru Tidak Boleh Sama Dengan Stok Lama.");
+            JOptionPane.showMessageDialog(this, "Stok Baru Tidak Boleh Sama Dengan Stok Lama.");
             return false;
         } else if (JDTanggalPenyesuaian.getDate() == null) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Tanggal Tidak Boleh Kosong.");
+            JOptionPane.showMessageDialog(this, "Tanggal Tidak Boleh Kosong.");
             return false;
         } else {
             return true;
@@ -403,7 +404,7 @@ public class PenyesuaianStok extends javax.swing.JFrame {
             }
         } catch (SQLException e) {
             out.println("E6" + e);
-            JOptionPaneF.showMessageDialog(null, "Gagal Generate Nomor Penyesuaian");
+            showMessageDialog(null, "Gagal Generate Nomor Penyesuaian");
         } finally {
             runSelct.closecon();
         }

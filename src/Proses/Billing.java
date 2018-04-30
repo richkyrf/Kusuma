@@ -7,7 +7,7 @@ package Proses;
 
 import java.awt.event.KeyEvent;
 import java.util.Date;
-import FunctionGUI.JOptionPaneF;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import static GlobalVar.Var.*;
 import KomponenGUI.FDateF;
@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import static javax.swing.JOptionPane.showMessageDialog;
 import javax.swing.UIManager;
 
 /**
@@ -57,7 +58,7 @@ public class Billing extends javax.swing.JFrame {
             JBTambah.setVisible(false);
             loadData(parameter);
         }
-        JTBayar.requestFocus();
+        JCObat.requestFocus();
     }
 
     void loadData(Object idEdit) {
@@ -88,7 +89,7 @@ public class Billing extends javax.swing.JFrame {
             }
         } catch (SQLException e) {
             out.println("E6" + e);
-            JOptionPaneF.showMessageDialog(null, "Gagal Panggil Data Billing Tindakan");
+            showMessageDialog(null, "Gagal Panggil Data Billing Tindakan");
         } finally {
             runSelct.closecon();
         }
@@ -109,7 +110,7 @@ public class Billing extends javax.swing.JFrame {
             }
         } catch (SQLException e) {
             out.println("E6" + e);
-            JOptionPaneF.showMessageDialog(null, "Gagal Panggil Data Billing Obat");
+            showMessageDialog(null, "Gagal Panggil Data Billing Obat");
         } finally {
             runSelct2.closecon();
         }
@@ -143,7 +144,7 @@ public class Billing extends javax.swing.JFrame {
             }
         } catch (SQLException e) {
             out.println("E6" + e);
-            JOptionPaneF.showMessageDialog(null, "Gagal Panggil Data Detail Tindakan");
+            showMessageDialog(null, "Gagal Panggil Data Detail Tindakan");
         } finally {
             runSelct.closecon();
         }
@@ -164,7 +165,7 @@ public class Billing extends javax.swing.JFrame {
             }
         } catch (SQLException e) {
             out.println("E6" + e);
-            JOptionPaneF.showMessageDialog(null, "Gagal Panggil Data Detail Obat");
+            showMessageDialog(null, "Gagal Panggil Data Detail Obat");
         } finally {
             runSelct2.closecon();
         }
@@ -200,7 +201,7 @@ public class Billing extends javax.swing.JFrame {
             }
         } catch (SQLException e) {
             out.println("E6" + e);
-            JOptionPaneF.showMessageDialog(null, "Gagal Generate Nomor Billing");
+            showMessageDialog(null, "Gagal Generate Nomor Billing");
         } finally {
             runSelct.closecon();
         }
@@ -209,22 +210,22 @@ public class Billing extends javax.swing.JFrame {
 
     boolean checkInput() {
         if (JDTanggal.getDate() == null) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Tanggal Tidak Boleh Kosong");
+            JOptionPane.showMessageDialog(this, "Tanggal Tidak Boleh Kosong");
             return false;
         } else if (JTNoAntrian.getText().isEmpty()) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. No. Antrian Boleh Kosong");
+            JOptionPane.showMessageDialog(this, "No. Antrian Boleh Kosong");
             return false;
         } else if (JTNoInvoice.getText().isEmpty()) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. No. Invoice Boleh Kosong");
+            JOptionPane.showMessageDialog(this, "No. Invoice Boleh Kosong");
             return false;
         } else if (JTNoBilling.getText().isEmpty()) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. No. Billing Boleh Kosong");
+            JOptionPane.showMessageDialog(this, "No. Billing Boleh Kosong");
             return false;
         } else if (JTableTindakan.getRowCount() == 0) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Silahkan Isi Tindakan Terlebih Dahulu.");
+            JOptionPane.showMessageDialog(this, "Silahkan Isi Tindakan Terlebih Dahulu.");
             return false;
         } else if (JTableObat.getRowCount() == 0) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Silahkan Isi Obat Terlebih Dahulu.");
+            JOptionPane.showMessageDialog(this, "Silahkan Isi Obat Terlebih Dahulu.");
             return false;
         } else {
             return true;
@@ -233,16 +234,16 @@ public class Billing extends javax.swing.JFrame {
 
     boolean checkTableTindakan() {
         if (JCTindakan.getSelectedIndex() == 0) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Silahkan Pilih Tindakan Terlebih Dahulu.");
+            JOptionPane.showMessageDialog(this, "Silahkan Pilih Tindakan Terlebih Dahulu.");
             return false;
         } else if (JTJumlahTindakan.getNumberFormattedText().replace("0", "").isEmpty()) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Jumlah Tidak Boleh Kosong.");
+            JOptionPane.showMessageDialog(this, "Jumlah Tidak Boleh Kosong.");
             return false;
         } else if (JTHargaTindakan.getNumberFormattedText().replace("0", "").isEmpty()) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Harga Tidak Boleh Kosong.");
+            JOptionPane.showMessageDialog(this, "Harga Tidak Boleh Kosong.");
             return false;
         } else if (JTHargaTindakan.getNumberFormattedText().replace("0", "").isEmpty()) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Sub Total Tidak Boleh Kosong.");
+            JOptionPane.showMessageDialog(this, "Sub Total Tidak Boleh Kosong.");
             return false;
         } else {
             return true;
@@ -251,16 +252,16 @@ public class Billing extends javax.swing.JFrame {
 
     boolean checkTableObat() {
         if (JCObat.getSelectedIndex() == 0) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Silahkan Pilih Obat Terlebih Dahulu.");
+            JOptionPane.showMessageDialog(this, "Silahkan Pilih Obat Terlebih Dahulu.");
             return false;
         } else if (JTJumlahObat.getNumberFormattedText().replace("0", "").isEmpty()) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Jumlah Tidak Boleh Kosong.");
+            JOptionPane.showMessageDialog(this, "Jumlah Tidak Boleh Kosong.");
             return false;
         } else if (JTHargaObat.getNumberFormattedText().replace("0", "").isEmpty()) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Harga Tidak Boleh Kosong.");
+            JOptionPane.showMessageDialog(this, "Harga Tidak Boleh Kosong.");
             return false;
         } else if (JTSubTotalObat.getNumberFormattedText().replace("0", "").isEmpty()) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Sub Total Tidak Boleh Kosong.");
+            JOptionPane.showMessageDialog(this, "Sub Total Tidak Boleh Kosong.");
             return false;
         } else {
             return true;
@@ -305,25 +306,23 @@ public class Billing extends javax.swing.JFrame {
         jlableF7 = new KomponenGUI.JlableF();
         JCNamaBeautician = new KomponenGUI.JcomboboxF();
         jPanel1 = new javax.swing.JPanel();
-        JBTambahTindakan = new KomponenGUI.JbuttonF();
+        jbuttonF1 = new KomponenGUI.JbuttonF();
         JTJumlahTindakan = new KomponenGUI.JPlaceHolder();
         JCTindakan = new KomponenGUI.JcomboboxF();
         jScrollPane1 = new javax.swing.JScrollPane();
         JTableTindakan = new KomponenGUI.JtableF();
-        JBHapusTindakan = new KomponenGUI.JbuttonF();
+        jbuttonF3 = new KomponenGUI.JbuttonF();
         JTHargaTindakan = new KomponenGUI.JPlaceHolder();
         JTSubTotalTindakan = new KomponenGUI.JPlaceHolder();
-        JBRefreshTindakan = new KomponenGUI.JbuttonF();
         jPanel2 = new javax.swing.JPanel();
-        JBTambahObat = new KomponenGUI.JbuttonF();
+        jbuttonF2 = new KomponenGUI.JbuttonF();
         JTJumlahObat = new KomponenGUI.JPlaceHolder();
         JCObat = new KomponenGUI.JcomboboxF();
         jScrollPane2 = new javax.swing.JScrollPane();
         JTableObat = new KomponenGUI.JtableF();
-        JBHapusObat = new KomponenGUI.JbuttonF();
+        jbuttonF4 = new KomponenGUI.JbuttonF();
         JTHargaObat = new KomponenGUI.JPlaceHolder();
         JTSubTotalObat = new KomponenGUI.JPlaceHolder();
-        JBRefreshObat = new KomponenGUI.JbuttonF();
         JBTambah = new KomponenGUI.JbuttonF();
         JDTanggal = new KomponenGUI.JdateCF();
         jlableF14 = new KomponenGUI.JlableF();
@@ -386,10 +385,10 @@ public class Billing extends javax.swing.JFrame {
             }
         });
 
-        JBTambahTindakan.setText("Tambah");
-        JBTambahTindakan.addActionListener(new java.awt.event.ActionListener() {
+        jbuttonF1.setText("Tambah");
+        jbuttonF1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBTambahTindakanActionPerformed(evt);
+                jbuttonF1ActionPerformed(evt);
             }
         });
 
@@ -423,11 +422,6 @@ public class Billing extends javax.swing.JFrame {
                 "Tindakan", "Jumlah", "Harga", "Sub Total"
             }
         ));
-        JTableTindakan.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JTableTindakanMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(JTableTindakan);
         if (JTableTindakan.getColumnModel().getColumnCount() > 0) {
             JTableTindakan.getColumnModel().getColumn(0).setMinWidth(500);
@@ -442,10 +436,10 @@ public class Billing extends javax.swing.JFrame {
         }
         JTableTindakan.setrender(new int[]{1,2,3}, new String[]{"Number","Number","Number"});
 
-        JBHapusTindakan.setText("Hapus");
-        JBHapusTindakan.addActionListener(new java.awt.event.ActionListener() {
+        jbuttonF3.setText("Hapus");
+        jbuttonF3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBHapusTindakanActionPerformed(evt);
+                jbuttonF3ActionPerformed(evt);
             }
         });
 
@@ -467,13 +461,6 @@ public class Billing extends javax.swing.JFrame {
             }
         });
 
-        JBRefreshTindakan.setText("Refresh");
-        JBRefreshTindakan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBRefreshTindakanActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -492,10 +479,9 @@ public class Billing extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 877, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(JBHapusTindakan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(JBTambahTindakan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(JBRefreshTindakan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(jbuttonF3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbuttonF1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -503,24 +489,21 @@ public class Billing extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JCTindakan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JBTambahTindakan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JTJumlahTindakan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JTHargaTindakan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JTSubTotalTindakan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(JBHapusTindakan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JBRefreshTindakan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        JBTambahObat.setText("Tambah");
-        JBTambahObat.addActionListener(new java.awt.event.ActionListener() {
+        jbuttonF2.setText("Tambah");
+        jbuttonF2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBTambahObatActionPerformed(evt);
+                jbuttonF2ActionPerformed(evt);
             }
         });
 
@@ -554,11 +537,6 @@ public class Billing extends javax.swing.JFrame {
                 "Obat", "Jumlah", "Harga", "Sub Total"
             }
         ));
-        JTableObat.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JTableObatMouseClicked(evt);
-            }
-        });
         jScrollPane2.setViewportView(JTableObat);
         if (JTableObat.getColumnModel().getColumnCount() > 0) {
             JTableObat.getColumnModel().getColumn(0).setMinWidth(500);
@@ -573,10 +551,10 @@ public class Billing extends javax.swing.JFrame {
         }
         JTableObat.setrender(new int[]{1,2,3}, new String[]{"Number","Number","Number"});
 
-        JBHapusObat.setText("Hapus");
-        JBHapusObat.addActionListener(new java.awt.event.ActionListener() {
+        jbuttonF4.setText("Hapus");
+        jbuttonF4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBHapusObatActionPerformed(evt);
+                jbuttonF4ActionPerformed(evt);
             }
         });
 
@@ -598,13 +576,6 @@ public class Billing extends javax.swing.JFrame {
             }
         });
 
-        JBRefreshObat.setText("Refresh");
-        JBRefreshObat.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JBRefreshObatActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -623,10 +594,9 @@ public class Billing extends javax.swing.JFrame {
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 877, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(JBHapusObat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(JBTambahObat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(JBRefreshObat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(jbuttonF4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbuttonF2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -634,17 +604,14 @@ public class Billing extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JCObat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JBTambahObat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JTJumlahObat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JTHargaObat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JTSubTotalObat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(JBHapusObat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JBRefreshObat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -784,19 +751,11 @@ public class Billing extends javax.swing.JFrame {
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addComponent(JTNoAntrian, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(jlableF17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(jlableF16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                    .addGroup(layout.createSequentialGroup()
-                                                        .addComponent(jlableF23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addComponent(jlableF22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addComponent(jlableF17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(JTNoBilling, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(JTNoInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                                                .addComponent(jlableF16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(JTNoInvoice, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -825,6 +784,14 @@ public class Billing extends javax.swing.JFrame {
                             .addComponent(jlableF19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jSeparator2))
                         .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(744, 744, 744)
+                .addComponent(jlableF23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jlableF22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(JTNoBilling, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -892,13 +859,9 @@ public class Billing extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void JBTambahTindakanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTambahTindakanActionPerformed
-        if (JBTambahTindakan.getText().equals("Tambah")) {
-            tambahTableTindakan();
-        } else {
-            ubahTableTindakan();
-        }
-    }//GEN-LAST:event_JBTambahTindakanActionPerformed
+    private void jbuttonF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF1ActionPerformed
+        tambahTableTindakan();
+    }//GEN-LAST:event_jbuttonF1ActionPerformed
 
     private void JCTindakanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCTindakanKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -912,13 +875,9 @@ public class Billing extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JTJumlahTindakanKeyPressed
 
-    private void JBTambahObatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTambahObatActionPerformed
-        if (JBTambahObat.getText().equals("Tambah")) {
-            tambahTableObat();
-        } else {
-            ubahTableObat();
-        }
-    }//GEN-LAST:event_JBTambahObatActionPerformed
+    private void jbuttonF2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF2ActionPerformed
+        tambahTableObat();
+    }//GEN-LAST:event_jbuttonF2ActionPerformed
 
     private void JTJumlahObatKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTJumlahObatKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -942,37 +901,29 @@ public class Billing extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         if (JBTambah.isVisible()) {
-            tambahBilling = null;
+            tambahPerawatan = null;
         } else {
-            ubahBilling = null;
+            ubahPerawatan = null;
         }
     }//GEN-LAST:event_formWindowClosed
 
-    private void JBHapusTindakanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBHapusTindakanActionPerformed
+    private void jbuttonF3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF3ActionPerformed
         hapusTableTindakan();
-    }//GEN-LAST:event_JBHapusTindakanActionPerformed
+    }//GEN-LAST:event_jbuttonF3ActionPerformed
 
-    private void JBHapusObatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBHapusObatActionPerformed
+    private void jbuttonF4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF4ActionPerformed
         hapusTableObat();
-    }//GEN-LAST:event_JBHapusObatActionPerformed
+    }//GEN-LAST:event_jbuttonF4ActionPerformed
 
     private void JTHargaTindakanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTHargaTindakanKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (JBTambahTindakan.getText().equals("Tambah")) {
-                tambahTableTindakan();
-            } else {
-                ubahTableTindakan();
-            }
+            JTSubTotalTindakan.requestFocus();
         }
     }//GEN-LAST:event_JTHargaTindakanKeyPressed
 
     private void JTHargaObatKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTHargaObatKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (JBTambahObat.getText().equals("Tambah")) {
-                tambahTableObat();
-            } else {
-                ubahTableObat();
-            }
+            JTSubTotalObat.requestFocus();
         }
     }//GEN-LAST:event_JTHargaObatKeyPressed
 
@@ -985,11 +936,11 @@ public class Billing extends javax.swing.JFrame {
     }//GEN-LAST:event_JBUbahActionPerformed
 
     private void JCTindakanItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCTindakanItemStateChanged
-        
+
     }//GEN-LAST:event_JCTindakanItemStateChanged
 
     private void JCObatItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCObatItemStateChanged
-        
+
     }//GEN-LAST:event_JCObatItemStateChanged
     private void JBKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBKembaliActionPerformed
         dispose();
@@ -1048,48 +999,8 @@ public class Billing extends javax.swing.JFrame {
     }//GEN-LAST:event_JTGrandTotalKeyPressed
 
     private void JTBayarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTBayarKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (JBTambah.isVisible()) {
-                tambahData();
-            } else {
-                ubahData();
-            }
-        }
+        // TODO add your handling code here:
     }//GEN-LAST:event_JTBayarKeyPressed
-
-    private void JTableTindakanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableTindakanMouseClicked
-        if (JTableTindakan.getSelectedRow() != -1) {
-            JCTindakan.setSelectedItem(JTableTindakan.getValueAt(JTableTindakan.getSelectedRow(), 0).toString());
-            JTJumlahTindakan.setText(JTableTindakan.getValueAt(JTableTindakan.getSelectedRow(), 1).toString());
-            JTHargaTindakan.setText(JTableTindakan.getValueAt(JTableTindakan.getSelectedRow(), 2).toString());
-            JTSubTotalTindakan.setText(JTableTindakan.getValueAt(JTableTindakan.getSelectedRow(), 3).toString());
-            JBTambahTindakan.setText("Ubah");
-        } else {
-            JBTambahTindakan.setText("Tambah");
-        }
-    }//GEN-LAST:event_JTableTindakanMouseClicked
-
-    private void JBRefreshTindakanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBRefreshTindakanActionPerformed
-        JTableTindakan.clearSelection();
-        JBTambahTindakan.setText("Tambah");
-    }//GEN-LAST:event_JBRefreshTindakanActionPerformed
-
-    private void JBRefreshObatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBRefreshObatActionPerformed
-        JTableObat.clearSelection();
-        JBTambahObat.setText("Tambah");
-    }//GEN-LAST:event_JBRefreshObatActionPerformed
-
-    private void JTableObatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableObatMouseClicked
-        if (JTableObat.getSelectedRow() != -1) {
-            JCObat.setSelectedItem(JTableObat.getValueAt(JTableObat.getSelectedRow(), 0).toString());
-            JTJumlahObat.setText(JTableObat.getValueAt(JTableObat.getSelectedRow(), 1).toString());
-            JTHargaObat.setText(JTableObat.getValueAt(JTableObat.getSelectedRow(), 2).toString());
-            JTSubTotalObat.setText(JTableObat.getValueAt(JTableObat.getSelectedRow(), 3).toString());
-            JBTambahObat.setText("Ubah");
-        } else {
-            JBTambahObat.setText("Tambah");
-        }
-    }//GEN-LAST:event_JTableObatMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1131,14 +1042,8 @@ public class Billing extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private KomponenGUI.JbuttonF JBHapusObat;
-    private KomponenGUI.JbuttonF JBHapusTindakan;
     private KomponenGUI.JbuttonF JBKembali;
-    private KomponenGUI.JbuttonF JBRefreshObat;
-    private KomponenGUI.JbuttonF JBRefreshTindakan;
     private KomponenGUI.JbuttonF JBTambah;
-    private KomponenGUI.JbuttonF JBTambahObat;
-    private KomponenGUI.JbuttonF JBTambahTindakan;
     private KomponenGUI.JbuttonF JBUbah;
     private KomponenGUI.JcomboboxF JCNamaBeautician;
     private KomponenGUI.JcomboboxF JCNamaDokter;
@@ -1165,6 +1070,10 @@ public class Billing extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private KomponenGUI.JbuttonF jbuttonF1;
+    private KomponenGUI.JbuttonF jbuttonF2;
+    private KomponenGUI.JbuttonF jbuttonF3;
+    private KomponenGUI.JbuttonF jbuttonF4;
     private KomponenGUI.JlableF jlableF10;
     private KomponenGUI.JlableF jlableF11;
     private KomponenGUI.JlableF jlableF14;
@@ -1196,9 +1105,8 @@ public class Billing extends javax.swing.JFrame {
                 JTJumlahTindakan.setText("");
                 JTHargaTindakan.setText("");
                 JTSubTotalTindakan.setText("");
-                setGrandTotal();
             } else {
-                JOptionPaneF.showMessageDialog(this, "Gagal. Silahkan Pilih Tindakan Terlebih Dahulu");
+                JOptionPane.showMessageDialog(this, "Silahkan Pilih Tindakan Terlebih Dahulu");
             }
         }
     }
@@ -1212,9 +1120,8 @@ public class Billing extends javax.swing.JFrame {
                 JTJumlahObat.setText("");
                 JTHargaObat.setText("");
                 JTSubTotalObat.setText("");
-                setGrandTotal();
             } else {
-                JOptionPaneF.showMessageDialog(this, "Gagal. Silahkan Pilih Obat Terlebih Dahulu");
+                JOptionPane.showMessageDialog(this, "Silahkan Pilih Obat Terlebih Dahulu");
             }
 
         }
@@ -1223,48 +1130,12 @@ public class Billing extends javax.swing.JFrame {
     void hapusTableTindakan() {
         if (JTableTindakan.getSelectedRow() != -1) {
             ((DefaultTableModel) JTableTindakan.getModel()).removeRow(JTableTindakan.getSelectedRow());
-            setGrandTotal();
         }
     }
 
     void hapusTableObat() {
         if (JTableObat.getSelectedRow() != -1) {
             ((DefaultTableModel) JTableObat.getModel()).removeRow(JTableObat.getSelectedRow());
-            setGrandTotal();
-        }
-    }
-
-    void ubahTableTindakan() {
-        if (JTableTindakan.getSelectedRow() != -1) {
-            if (checkTableTindakan()) {
-                JTableTindakan.setValueAt(JCTindakan.getSelectedItem(), JTableTindakan.getSelectedRow(), 0);
-                JTableTindakan.setValueAt(JTJumlahTindakan.getText(), JTableTindakan.getSelectedRow(), 1);
-                JTableTindakan.setValueAt(JTHargaTindakan.getText(), JTableTindakan.getSelectedRow(), 2);
-                JTableTindakan.setValueAt(JTSubTotalTindakan.getText(), JTableTindakan.getSelectedRow(), 3);
-                JCTindakan.requestFocus();
-                JCTindakan.setSelectedIndex(0);
-                JTJumlahTindakan.setText("");
-                JTHargaTindakan.setText("");
-                JTSubTotalTindakan.setText("");
-                JTableTindakan.clearSelection();
-            }
-        }
-    }
-
-    void ubahTableObat() {
-        if (JTableObat.getSelectedRow() != -1) {
-            if (checkTableObat()) {
-                JTableObat.setValueAt(JCObat.getSelectedItem(), JTableObat.getSelectedRow(), 0);
-                JTableObat.setValueAt(JTJumlahObat.getText(), JTableObat.getSelectedRow(), 1);
-                JTableObat.setValueAt(JTHargaObat.getText(), JTableObat.getSelectedRow(), 2);
-                JTableTindakan.setValueAt(JTSubTotalObat.getText(), JTableObat.getSelectedRow(), 3);
-                JCObat.requestFocus();
-                JCObat.setSelectedIndex(0);
-                JTJumlahObat.setText("");
-                JTHargaObat.setText("");
-                JTSubTotalObat.setText("");
-                JTableObat.clearSelection();
-            }
         }
     }
 
@@ -1276,13 +1147,16 @@ public class Billing extends javax.swing.JFrame {
             if (Berhasil) {
                 Berhasil = multiInsert.setautocomit(false);
                 if (Berhasil) {
-                    Berhasil = multiInsert.Excute("INSERT INTO `tbbilling`(`NoBilling`, `Tanggal`, `NoInvoice`, `Bayar`) VALUES ('" + JTNoBilling.getText() + "','" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTNoInvoice.getText() + "','" + JTBayar.getNumberFormattedText() + "')", null);
+                    //Berhasil = multiInsert.Excute("INSERT INTO `tbperawatan`(`Tanggal`, `NoInvoice`, `NoAntrian`, `IdDokter`, `IdBeautician`, `Keluhan`, `Diagnosa`, `Catatan`) VALUES ('" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "','" + JTNoInvoice.getText() + "', '" + JTNoAntrian.getText() + "', (SELECT `IdDokter` FROM `tbmdokter` WHERE `NamaDokter` = '" + JCNamaDokter.getSelectedItem() + "'),(SELECT `IdBeautician` FROM `tbmbeautician` WHERE `NamaBeautician` = '" + JCNamaBeautician.getSelectedItem() + "'),'" + JTKeluhanPasien.getText() + "','" + JTDiagnosaPasien.getText() + "','" + JTCatatanPasien.getText() + "')", null);
                     if (Berhasil) {
                         for (int i = 0; i < JTableTindakan.getRowCount(); i++) {
-                            Berhasil = multiInsert.Excute("INSERT INTO `tbbillingtindakan`(`NoBilling`, `IdTindakan`, `Jumlah`, `Harga`) VALUES ('" + JTNoBilling.getText() + "',(SELECT `IdTindakan` FROM `tbmtindakan` WHERE `NamaTindakan` = '" + JTableTindakan.getValueAt(i, 0) + "'),'" + JTableTindakan.getValueAt(i, 1).toString().replace(".", "") + "','" + JTableTindakan.getValueAt(i, 2).toString().replace(".", "") + "')", null);
+                            Berhasil = multiInsert.Excute("INSERT INTO `tbperawatandetail`(`NoInvoice`, `IdTindakan`, `Jumlah`, `Harga`) VALUES ('" + JTNoInvoice.getText() + "',(SELECT `IdTindakan` FROM `tbmtindakan` WHERE `NamaTindakan` = '" + JTableTindakan.getValueAt(i, 0) + "'),'" + JTableTindakan.getValueAt(i, 1).toString().replace(".", "") + "','" + JTableTindakan.getValueAt(i, 2).toString().replace(".", "") + "')", null);
                             if (Berhasil) {
                                 for (int j = 0; j < JTableObat.getRowCount(); j++) {
-                                    Berhasil = multiInsert.Excute("INSERT INTO `tbbillingobat`(`NoBilling`, `IdObat`, `Jumlah`, `Harga`) VALUES ('" + JTNoBilling.getText() + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTableObat.getValueAt(i, 0) + "'),'" + JTableObat.getValueAt(i, 1).toString().replace(".", "") + "','" + JTableObat.getValueAt(i, 2).toString().replace(".", "") + "')", null);
+                                    Berhasil = multiInsert.Excute("INSERT INTO `tbobatdetail`(`NoInvoice`, `IdObat`, `Jumlah`, `Harga`) VALUES ('" + JTNoInvoice.getText() + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTableObat.getValueAt(i, 0) + "'),'" + JTableObat.getValueAt(i, 1).toString().replace(".", "") + "','" + JTableObat.getValueAt(i, 2).toString().replace(".", "") + "')", null);
+                                    if (Berhasil) {
+                                        Berhasil = multiInsert.Excute("UPDATE `tbantrian` SET `Status` = 1 WHERE `NoAntrian` = '" + JTNoAntrian.getText() + "'", null);
+                                    }
                                 }
                             }
                         }
@@ -1291,24 +1165,44 @@ public class Billing extends javax.swing.JFrame {
                 if (Berhasil == false) {
                     multiInsert.rollback();
                     multiInsert.closecon();
-                    JOptionPaneF.showMessageDialog(this, "Gagal Tambah Data Billing");
+                    JOptionPane.showMessageDialog(this, "Gagal Tambah Data Perawatan");
                 }
                 if (Berhasil == true) {
-                    JOptionPaneF.showMessageDialog(this, "Berhasil Tambah Data Billing");
+                    JOptionPane.showMessageDialog(this, "Berhasil Tambah Data Perawatan");
                     multiInsert.Commit();
                     multiInsert.closecon();
 //                if (print) {
 //                    printing();
 //                }
-                    if (listBilling != null) {
-                        listBilling.load();
+                    if (listPerawatan != null) {
+                        listPerawatan.load();
                     }
-                    if (listAntrianBilling != null) {
-                        listAntrianBilling.load();
-                        if (listAntrianBilling.jcomCari1.jtablef.getRowCount() == 0) {
-                            listAntrianBilling.dispose();
+                    if (listAntrian != null) {
+                        listAntrian.load();
+                        if (listAntrian.jcomCari1.jtablef.getRowCount() == 0) {
+                            listAntrian.dispose();
                         }
                     }
+//                    JTableTindakan.setModel(new javax.swing.table.DefaultTableModel(
+//                            new Object[][]{}, new String[]{"Tindakan", "Jumlah", "Harga"}
+//                    ));
+//                    JTableTindakan.getColumnModel().getColumn(0).setPreferredWidth(668);
+//                    JTableTindakan.getColumnModel().getColumn(1).setPreferredWidth(105);
+//                    JCTindakan.requestFocus();
+//                    JTJumlahTindakan.setText("");
+//                    JTHargaTindakan.setText("");
+//                    JTableTindakan.clearSelection();
+//
+//                    JTableObat.setModel(new javax.swing.table.DefaultTableModel(
+//                            new Object[][]{}, new String[]{"Obat", "Jumlah", "Harga"}
+//                    ));
+//                    JTableObat.getColumnModel().getColumn(0).setPreferredWidth(668);
+//                    JTableObat.getColumnModel().getColumn(1).setPreferredWidth(105);
+//                    JCObat.requestFocus();
+//                    JTJumlahObat.setText("");
+//                    JTHargaObat.setText("");
+//                    JTableObat.clearSelection();
+//                    JTNoInvoice.setText(getNoInvoice());
                     dispose();
                 }
             }
@@ -1323,17 +1217,17 @@ public class Billing extends javax.swing.JFrame {
             if (Berhasil) {
                 Berhasil = multiInsert.setautocomit(false);
                 if (Berhasil) {
-                    Berhasil = multiInsert.Excute("UPDATE `tbbilling` SET `NoBilling`='" + JTNoBilling.getText() + "',`Tanggal`='" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',`NoInvoice`='" + JTNoInvoice.getText() + "',`Bayar`='" + JTBayar.getNumberFormattedText() + "' WHERE `IdBilling` = '" + Parameter + "'", null);
+                    //Berhasil = multiInsert.Excute("UPDATE `tbperawatan` SET `Tanggal`='" + FDateF.datetostr(JDTanggal.getDate(), "yyyy-MM-dd") + "',`NoInvoice`='" + JTNoInvoice.getText() + "',`NoAntrian`='" + JTNoAntrian.getText() + "',`IdDokter`=(SELECT `IdDokter` FROM `tbmdokter` WHERE `NamaDokter` = '" + JCNamaDokter.getSelectedItem() + "'),`IdBeautician`=(SELECT `IdBeautician` FROM `tbmbeautician` WHERE `NamaBeautician` = '" + JCNamaBeautician.getSelectedItem() + "'),`Keluhan`='" + JTKeluhanPasien.getText() + "',`Diagnosa`='" + JTDiagnosaPasien.getText() + "',`Catatan`='" + JTCatatanPasien.getText() + "' WHERE `IdPerawatan` = '" + Parameter + "'", null);
                     if (Berhasil) {
-                        Berhasil = multiInsert.Excute("DELETE FROM `tbbillingtindakan` WHERE `NoBilling` = '" + JTNoBilling.getText() + "'", null);
+                        Berhasil = multiInsert.Excute("DELETE FROM `tbperawatandetail` WHERE `NoInvoice` = '" + JTNoInvoice.getText() + "'", null);
                         if (Berhasil) {
-                            Berhasil = multiInsert.Excute("DELETE FROM `tbbillingobat` WHERE `NoBilling` = '" + JTNoBilling.getText() + "'", null);
+                            Berhasil = multiInsert.Excute("DELETE FROM `tbobatdetail` WHERE `NoInvoice` = '" + JTNoInvoice.getText() + "'", null);
                             if (Berhasil) {
                                 for (int i = 0; i < JTableTindakan.getRowCount(); i++) {
-                                    Berhasil = multiInsert.Excute("INSERT INTO `tbbillingtindakan`(`NoBilling`, `IdTindakan`, `Jumlah`, `Harga`) VALUES ('" + JTNoBilling.getText() + "',(SELECT `IdTindakan` FROM `tbmtindakan` WHERE `NamaTindakan` = '" + JTableTindakan.getValueAt(i, 0) + "'),'" + JTableTindakan.getValueAt(i, 1).toString().replace(".", "") + "','" + JTableTindakan.getValueAt(i, 2).toString().replace(".", "") + "')", null);
+                                    Berhasil = multiInsert.Excute("INSERT INTO `tbperawatandetail`(`NoInvoice`, `IdTindakan`, `Jumlah`, `Harga`) VALUES ('" + JTNoInvoice.getText() + "',(SELECT `IdTindakan` FROM `tbmtindakan` WHERE `NamaTindakan` = '" + JTableTindakan.getValueAt(i, 0) + "'),'" + JTableTindakan.getValueAt(i, 1).toString().replace(".", "") + "','" + JTableTindakan.getValueAt(i, 2).toString().replace(".", "") + "')", null);
                                     if (Berhasil) {
                                         for (int j = 0; j < JTableObat.getRowCount(); j++) {
-                                            Berhasil = multiInsert.Excute("INSERT INTO `tbbillingobat`(`NoBilling`, `IdObat`, `Jumlah`, `Harga`) VALUES ('" + JTNoBilling.getText() + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTableObat.getValueAt(i, 0) + "'),'" + JTableObat.getValueAt(i, 1).toString().replace(".", "") + "','" + JTableObat.getValueAt(i, 2).toString().replace(".", "") + "')", null);
+                                            Berhasil = multiInsert.Excute("INSERT INTO `tbobatdetail`(`NoInvoice`, `IdObat`, `Jumlah`, `Harga`) VALUES ('" + JTNoInvoice.getText() + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTableObat.getValueAt(i, 0) + "'),'" + JTableObat.getValueAt(i, 1).toString().replace(".", "") + "','" + JTableObat.getValueAt(i, 2).toString().replace(".", "") + "')", null);
                                         }
                                     }
                                 }
@@ -1344,18 +1238,19 @@ public class Billing extends javax.swing.JFrame {
                 if (Berhasil == false) {
                     multiInsert.rollback();
                     multiInsert.closecon();
-                    JOptionPaneF.showMessageDialog(this, "Gagal Ubah Data Billing");
+                    JOptionPane.showMessageDialog(this, "Gagal Ubah Data Perawatan");
                 }
                 if (Berhasil == true) {
-                    JOptionPaneF.showMessageDialog(this, "Berhasil Ubah Data Billing");
+                    JOptionPane.showMessageDialog(this, "Berhasil Ubah Data Perawatan");
                     multiInsert.Commit();
                     multiInsert.closecon();
 //                if (print) {
 //                    printing();
 //                }
                     dispose();
-                    if (listBilling != null) {
-                        listBilling.load();
+                    ubahPerawatan = null;
+                    if (listPerawatan != null) {
+                        listPerawatan.load();
                     }
                 }
             }

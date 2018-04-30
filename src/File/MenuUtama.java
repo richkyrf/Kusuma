@@ -18,7 +18,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import FunctionGUI.JOptionPaneF;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -35,7 +35,7 @@ public class MenuUtama extends javax.swing.JFrame {
         setTitle("Menu Utama");
         setVisible(true);
         new Threading(jlableF1, "SELECT COUNT(*) FROM `tbantrian` WHERE `Status` = 0 AND `Tanggal` = '" + FDateF.datetostr(new Date(), "yyyy-MM-dd") + "'", "Pasien Hari Ini: ", 500);
-        new Threading(jlableF5, "SELECT COUNT(*) FROM `tbantrian`a JOIN `tbperawatan`b ON a.`NoAntrian`=b.`NoAntrian` AND a.`Tanggal`=b.`Tanggal` LEFT JOIN `tbbilling`c ON b.`NoInvoice`=c.`NoInvoice` WHERE a.`Status` = 1 AND a.`Tanggal` = '" + FDateF.datetostr(new Date(), "yyyy-MM-dd") + "' AND c.`IdBilling` IS NULL", "Antrian Billing: ", 500);
+        new Threading(jlableF5, "SELECT COUNT(*) FROM `tbantrian` WHERE `Status` = 1 AND `Tanggal` = '" + FDateF.datetostr(new Date(), "yyyy-MM-dd") + "'", "Antrian Billing: ", 500);
     }
 
     /**
@@ -79,7 +79,6 @@ public class MenuUtama extends javax.swing.JFrame {
         JMList = new javax.swing.JMenu();
         JMIListPacking = new javax.swing.JMenuItem();
         JMIListPerawatan = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
         JMLaporan = new javax.swing.JMenu();
@@ -342,15 +341,7 @@ public class MenuUtama extends javax.swing.JFrame {
         });
         JMList.add(JMIListPerawatan);
 
-        jMenuItem10.setText("3. List Billing");
-        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
-            }
-        });
-        JMList.add(jMenuItem10);
-
-        jMenuItem6.setText("4. List Barang Masuk");
+        jMenuItem6.setText("3. List Barang");
         jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem6ActionPerformed(evt);
@@ -358,7 +349,7 @@ public class MenuUtama extends javax.swing.JFrame {
         });
         JMList.add(jMenuItem6);
 
-        jMenuItem8.setText("5. List Penyesuaian Stok");
+        jMenuItem8.setText("4. List Penyesuaian Stok");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem8ActionPerformed(evt);
@@ -505,7 +496,7 @@ public class MenuUtama extends javax.swing.JFrame {
 
     private void jbuttonF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF1ActionPerformed
         if (jlableF1.getText().split("\\: ")[1].equals("0")) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Belum Ada Pasien Yang Antri.");
+            JOptionPane.showMessageDialog(this, "Belum Ada Pasien Yang Antri.");
         } else {
             if (listAntrian == null) {
                 listAntrian = new List("Antrian");
@@ -563,7 +554,7 @@ public class MenuUtama extends javax.swing.JFrame {
 
     private void JMIProsesPackingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JMIProsesPackingActionPerformed
         if (jlableF1.getText().split("\\: ")[1].equals("0")) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Belum Ada Pasien Yang Antri.");
+            JOptionPane.showMessageDialog(this, "Belum Ada Pasien Yang Antri.");
         } else {
             if (listAntrian == null) {
                 listAntrian = new List("Antrian");
@@ -585,7 +576,7 @@ public class MenuUtama extends javax.swing.JFrame {
 
     private void jbuttonF5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF5ActionPerformed
         if (jlableF5.getText().split("\\: ")[1].equals("0")) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Belum Ada Billing.");
+            JOptionPane.showMessageDialog(this, "Belum Ada Billing.");
         } else {
             if (listAntrianBilling == null) {
                 listAntrianBilling = new List("Antrian Billing");
@@ -598,7 +589,7 @@ public class MenuUtama extends javax.swing.JFrame {
 
     private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
         if (jlableF5.getText().split("\\: ")[1].equals("0")) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Belum Ada Billing.");
+            JOptionPane.showMessageDialog(this, "Belum Ada Billing.");
         } else {
             if (listAntrianBilling == null) {
                 listAntrianBilling = new List("Antrian Billing");
@@ -608,15 +599,6 @@ public class MenuUtama extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jMenuItem9ActionPerformed
-
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
-        if (listBilling == null) {
-            listBilling = new List("Billing");
-        } else {
-            listBilling.setState(NORMAL);
-            listBilling.toFront();
-        }
-    }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -672,7 +654,6 @@ public class MenuUtama extends javax.swing.JFrame {
     private javax.swing.JMenuBar JMenuBar;
     private javax.swing.JPopupMenu.Separator SFile;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
