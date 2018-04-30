@@ -8,9 +8,8 @@ package File;
 import LSubProces.Insert;
 import static File.EncMD5.getMD5;
 import java.awt.event.KeyEvent;
-import FunctionGUI.JOptionPaneF;
-import static GlobalVar.Var.*;
 import javax.swing.JOptionPane;
+import static GlobalVar.Var.*;
 
 /**
  *
@@ -234,10 +233,10 @@ public class TambahUser extends javax.swing.JFrame {
 
     void tambah() {
         if (JTUsername.getText().replace(" ", "").isEmpty()) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Username Tidak Boleh Kosong", "Information", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Username Tidak Boleh Kosong", "Information", JOptionPane.INFORMATION_MESSAGE);
             JTUsername.requestFocus();
         } else if (JCLevel.getSelectedIndex() == 0) {
-            JOptionPaneF.showMessageDialog(this, "Gagal. Level User Harus Dipilih", "Information", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Level User Harus Dipilih", "Information", JOptionPane.INFORMATION_MESSAGE);
             JCLevel.requestFocus();
             JCLevel.showPopup();
         } else {

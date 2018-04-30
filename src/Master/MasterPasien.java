@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-import FunctionGUI.JOptionPaneF;
+import javax.swing.JOptionPane;
 import static GlobalVar.Var.*;
 import Proses.Penjualan;
 
@@ -70,15 +70,15 @@ public class MasterPasien extends javax.swing.JFrame {
 
     Boolean checkInput() {
         if (JTNamaPasien.getText().replace(" ", "").equals("")) {
-            JOptionPaneF.showMessageDialog(null, "Gagal. Nama Tidak Boleh Kosong");
+            JOptionPane.showMessageDialog(null, "Nama Tidak Boleh Kosong");
             JTNamaPasien.requestFocus();
             return false;
         } else if (JDTanggalDaftar.getDate() == null) {
-            JOptionPaneF.showMessageDialog(null, "Gagal. Tanggal Daftar Tidak Boleh Kosong");
+            JOptionPane.showMessageDialog(null, "Tanggal Daftar Tidak Boleh Kosong");
             JDTanggalDaftar.requestFocus();
             return false;
         } else if (JDTanggalLahir.getDate() == null) {
-            JOptionPaneF.showMessageDialog(null, "Gagal. Tanggal Lahir Tidak Boleh Kosong");
+            JOptionPane.showMessageDialog(null, "Tanggal Lahir Tidak Boleh Kosong");
             JDTanggalLahir.requestFocus();
             return false;
         }

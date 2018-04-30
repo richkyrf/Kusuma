@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-import FunctionGUI.JOptionPaneF;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -63,11 +63,11 @@ public class MasterTindakan extends javax.swing.JFrame {
 
     Boolean checkInput() {
         if (JTNamaTindakan.getText().replace(" ", "").equals("")) {
-            JOptionPaneF.showMessageDialog(null, "Gagal. Nama Tidak Boleh Kosong");
+            JOptionPane.showMessageDialog(null, "Nama Tidak Boleh Kosong");
             JTNamaTindakan.requestFocus();
             return false;
         } else if (JTHarga.getText().replace(" ", "").equals("")) {
-            JOptionPaneF.showMessageDialog(null, "Gagal. Harga Tidak Boleh Kosong");
+            JOptionPane.showMessageDialog(null, "Harga Tidak Boleh Kosong");
             JTHarga.requestFocus();
             return false;
         }

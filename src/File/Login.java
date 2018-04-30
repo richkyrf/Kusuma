@@ -13,12 +13,11 @@ import java.net.BindException;
 import static java.net.InetAddress.getLocalHost;
 import java.net.ServerSocket;
 import java.util.ArrayList;
-import FunctionGUI.JOptionPaneF;
+import javax.swing.JOptionPane;
 import static javax.swing.UIManager.setLookAndFeel;
 import static GlobalVar.Var.*;
 import KomponenGUI.FDateF;
 import java.util.Date;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -183,10 +182,10 @@ public class Login extends javax.swing.JFrame {
             ServerSocket serverSocket = new ServerSocket(65535, 1, getLocalHost());
             new Login();
         } catch (BindException ex) {
-            JOptionPaneF.showMessageDialog(null, "Gagal. Aplikasi Sudah Terbuka !!!", "Information", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Aplikasi Sudah Terbuka !!!", "Information", JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
         } catch (IOException ex) {
-            JOptionPaneF.showMessageDialog(null, "Gagal. Aplikasi Sudah Terbuka !!!", "Information", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Aplikasi Sudah Terbuka !!!", "Information", JOptionPane.INFORMATION_MESSAGE);
             System.exit(0);
         }
     }
@@ -204,11 +203,11 @@ public class Login extends javax.swing.JFrame {
                 new MenuUtama();
                 dispose();
             } else {
-                JOptionPaneF.showMessageDialog(this, "Gagal Login. Silahkan Ulangi . . .", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Gagal Login. Silahkan Ulangi . . .", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (Exception e) {
             Eror.LogEror.SaveEror(e);
-            JOptionPaneF.showMessageDialog(this, "Gagal Login. Silahkan Ulangi . . .", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Gagal Login. Silahkan Ulangi . . .", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
