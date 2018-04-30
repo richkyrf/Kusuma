@@ -8,8 +8,9 @@ package File;
 import LSubProces.Update;
 import static File.EncMD5.getMD5;
 import java.awt.event.KeyEvent;
-import javax.swing.JOptionPane;
+import FunctionGUI.JOptionPaneF;
 import static GlobalVar.Var.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -205,7 +206,7 @@ public class ResetPasswordUser extends javax.swing.JFrame {
 
     void reset() {
         if (JCUsername.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Username Harus Dipilih", "Information", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPaneF.showMessageDialog(this, "Gagal. Username Harus Dipilih", "Information", JOptionPane.INFORMATION_MESSAGE);
             JCUsername.requestFocus();
             JCUsername.showPopup();
         } else {

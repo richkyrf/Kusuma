@@ -7,7 +7,7 @@ package Proses;
 
 import java.awt.event.KeyEvent;
 import java.util.Date;
-import javax.swing.JOptionPane;
+import FunctionGUI.JOptionPaneF;
 import javax.swing.table.DefaultTableModel;
 import static GlobalVar.Var.*;
 import KomponenGUI.FDateF;
@@ -22,7 +22,6 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  *
@@ -84,7 +83,7 @@ public class Perawatan extends javax.swing.JFrame {
             }
         } catch (SQLException e) {
             out.println("E6" + e);
-            showMessageDialog(null, "Gagal Panggil Data Detail Tindakan");
+            JOptionPaneF.showMessageDialog(null, "Gagal Panggil Data Detail Tindakan");
         } finally {
             runSelct.closecon();
         }
@@ -103,7 +102,7 @@ public class Perawatan extends javax.swing.JFrame {
             }
         } catch (SQLException e) {
             out.println("E6" + e);
-            showMessageDialog(null, "Gagal Panggil Data Detail Obat");
+            JOptionPaneF.showMessageDialog(null, "Gagal Panggil Data Detail Obat");
         } finally {
             runSelct2.closecon();
         }
@@ -147,7 +146,7 @@ public class Perawatan extends javax.swing.JFrame {
             }
         } catch (SQLException e) {
             out.println("E6" + e);
-            showMessageDialog(null, "Gagal Generate Nomor Invoice");
+            JOptionPaneF.showMessageDialog(null, "Gagal Generate Nomor Invoice");
         } finally {
             runSelct.closecon();
         }
@@ -156,19 +155,19 @@ public class Perawatan extends javax.swing.JFrame {
 
     boolean checkInput() {
         if (JDTanggal.getDate() == null) {
-            JOptionPane.showMessageDialog(this, "Tanggal Tidak Boleh Kosong");
+            JOptionPaneF.showMessageDialog(this, "Gagal. Tanggal Tidak Boleh Kosong");
             return false;
         } else if (JTNoInvoice.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No. Invoice Boleh Kosong");
+            JOptionPaneF.showMessageDialog(this, "Gagal. No. Invoice Boleh Kosong");
             return false;
         } else if (JCNamaDokter.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Silahkan Pilih Nama Dokter Terlebih Dahulu.");
+            JOptionPaneF.showMessageDialog(this, "Gagal. Silahkan Pilih Nama Dokter Terlebih Dahulu.");
             return false;
         } else if (JTableTindakan.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Silahkan Isi Tindakan Terlebih Dahulu.");
+            JOptionPaneF.showMessageDialog(this, "Gagal. Silahkan Isi Tindakan Terlebih Dahulu.");
             return false;
         } else if (JTableObat.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "Silahkan Isi Obat Terlebih Dahulu.");
+            JOptionPaneF.showMessageDialog(this, "Gagal. Silahkan Isi Obat Terlebih Dahulu.");
             return false;
         } else {
             return true;
@@ -177,10 +176,10 @@ public class Perawatan extends javax.swing.JFrame {
 
     boolean checkTableTindakan() {
         if (JCTindakan.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Silahkan Pilih Tindakan Terlebih Dahulu.");
+            JOptionPaneF.showMessageDialog(this, "Gagal. Silahkan Pilih Tindakan Terlebih Dahulu.");
             return false;
         } else if (JTJumlahTindakan.getNumberFormattedText().replace("0", "").isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Jumlah Tidak Boleh Kosong.");
+            JOptionPaneF.showMessageDialog(this, "Gagal. Jumlah Tidak Boleh Kosong.");
             return false;
         } else {
             return true;
@@ -189,10 +188,10 @@ public class Perawatan extends javax.swing.JFrame {
 
     boolean checkTableObat() {
         if (JCObat.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Silahkan Pilih Obat Terlebih Dahulu.");
+            JOptionPaneF.showMessageDialog(this, "Gagal. Silahkan Pilih Obat Terlebih Dahulu.");
             return false;
         } else if (JTJumlahObat.getNumberFormattedText().replace("0", "").isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Jumlah Tidak Boleh Kosong.");
+            JOptionPaneF.showMessageDialog(this, "Gagal. Jumlah Tidak Boleh Kosong.");
             return false;
         } else {
             return true;
@@ -227,19 +226,21 @@ public class Perawatan extends javax.swing.JFrame {
         JTCatatanPasien = new KomponenGUI.JtextF();
         JCNamaBeautician = new KomponenGUI.JcomboboxF();
         jPanel1 = new javax.swing.JPanel();
-        jbuttonF1 = new KomponenGUI.JbuttonF();
+        JBTambahTindakan = new KomponenGUI.JbuttonF();
         JTJumlahTindakan = new KomponenGUI.JPlaceHolder();
         JCTindakan = new KomponenGUI.JcomboboxF();
         jScrollPane1 = new javax.swing.JScrollPane();
         JTableTindakan = new KomponenGUI.JtableF();
-        jbuttonF3 = new KomponenGUI.JbuttonF();
+        JBHapusTindakan = new KomponenGUI.JbuttonF();
+        JBRefreshTindakan = new KomponenGUI.JbuttonF();
         jPanel2 = new javax.swing.JPanel();
-        jbuttonF2 = new KomponenGUI.JbuttonF();
+        JBTambahObat = new KomponenGUI.JbuttonF();
         JTJumlahObat = new KomponenGUI.JPlaceHolder();
         JCObat = new KomponenGUI.JcomboboxF();
         jScrollPane2 = new javax.swing.JScrollPane();
         JTableObat = new KomponenGUI.JtableF();
-        jbuttonF4 = new KomponenGUI.JbuttonF();
+        JBHapusObat = new KomponenGUI.JbuttonF();
+        JBRefreshObat = new KomponenGUI.JbuttonF();
         JBTambah = new KomponenGUI.JbuttonF();
         JDTanggal = new KomponenGUI.JdateCF();
         jlableF14 = new KomponenGUI.JlableF();
@@ -323,10 +324,10 @@ public class Perawatan extends javax.swing.JFrame {
             }
         });
 
-        jbuttonF1.setText("Tambah");
-        jbuttonF1.addActionListener(new java.awt.event.ActionListener() {
+        JBTambahTindakan.setText("Tambah");
+        JBTambahTindakan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbuttonF1ActionPerformed(evt);
+                JBTambahTindakanActionPerformed(evt);
             }
         });
 
@@ -357,21 +358,30 @@ public class Perawatan extends javax.swing.JFrame {
                 "Tindakan", "Jumlah"
             }
         ));
+        JTableTindakan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JTableTindakanMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(JTableTindakan);
         if (JTableTindakan.getColumnModel().getColumnCount() > 0) {
             JTableTindakan.getColumnModel().getColumn(0).setMinWidth(668);
             JTableTindakan.getColumnModel().getColumn(0).setPreferredWidth(668);
             JTableTindakan.getColumnModel().getColumn(0).setMaxWidth(668);
-            JTableTindakan.getColumnModel().getColumn(1).setMinWidth(105);
-            JTableTindakan.getColumnModel().getColumn(1).setPreferredWidth(105);
-            JTableTindakan.getColumnModel().getColumn(1).setMaxWidth(105);
         }
         JTableTindakan.setrender(new int[]{1,2}, new String[]{"Number","Number"});
 
-        jbuttonF3.setText("Hapus");
-        jbuttonF3.addActionListener(new java.awt.event.ActionListener() {
+        JBHapusTindakan.setText("Hapus");
+        JBHapusTindakan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbuttonF3ActionPerformed(evt);
+                JBHapusTindakanActionPerformed(evt);
+            }
+        });
+
+        JBRefreshTindakan.setText("Refresh");
+        JBRefreshTindakan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBRefreshTindakanActionPerformed(evt);
             }
         });
 
@@ -389,9 +399,10 @@ public class Perawatan extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 771, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jbuttonF3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jbuttonF1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(JBHapusTindakan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(JBTambahTindakan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(JBRefreshTindakan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -399,19 +410,22 @@ public class Perawatan extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JCTindakan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbuttonF1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBTambahTindakan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JTJumlahTindakan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbuttonF3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(JBHapusTindakan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JBRefreshTindakan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jbuttonF2.setText("Tambah");
-        jbuttonF2.addActionListener(new java.awt.event.ActionListener() {
+        JBTambahObat.setText("Tambah");
+        JBTambahObat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbuttonF2ActionPerformed(evt);
+                JBTambahObatActionPerformed(evt);
             }
         });
 
@@ -442,21 +456,30 @@ public class Perawatan extends javax.swing.JFrame {
                 "Obat", "Jumlah"
             }
         ));
+        JTableObat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JTableObatMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(JTableObat);
         if (JTableObat.getColumnModel().getColumnCount() > 0) {
             JTableObat.getColumnModel().getColumn(0).setMinWidth(668);
             JTableObat.getColumnModel().getColumn(0).setPreferredWidth(668);
             JTableObat.getColumnModel().getColumn(0).setMaxWidth(668);
-            JTableObat.getColumnModel().getColumn(1).setMinWidth(105);
-            JTableObat.getColumnModel().getColumn(1).setPreferredWidth(105);
-            JTableObat.getColumnModel().getColumn(1).setMaxWidth(105);
         }
         JTableObat.setrender(new int[]{1,2}, new String[]{"Number","Number"});
 
-        jbuttonF4.setText("Hapus");
-        jbuttonF4.addActionListener(new java.awt.event.ActionListener() {
+        JBHapusObat.setText("Hapus");
+        JBHapusObat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbuttonF4ActionPerformed(evt);
+                JBHapusObatActionPerformed(evt);
+            }
+        });
+
+        JBRefreshObat.setText("Refresh");
+        JBRefreshObat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JBRefreshObatActionPerformed(evt);
             }
         });
 
@@ -474,9 +497,10 @@ public class Perawatan extends javax.swing.JFrame {
                     .addComponent(jScrollPane2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jbuttonF4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jbuttonF2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(JBHapusObat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(JBTambahObat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(JBRefreshObat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -484,12 +508,15 @@ public class Perawatan extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JCObat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbuttonF2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JBTambahObat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JTJumlahObat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbuttonF4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(JBHapusObat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JBRefreshObat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -555,19 +582,11 @@ public class Perawatan extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(JBKembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(JBUbah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(JBTambah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -630,13 +649,19 @@ public class Perawatan extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(JTCatatanPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jlableF19, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlableF18, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jSeparator1))
-                        .addContainerGap())))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(JBKembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(JBUbah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(JBTambah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jlableF19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jSeparator2)
+                            .addComponent(jlableF18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(10, 10, 10))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -681,7 +706,7 @@ public class Perawatan extends javax.swing.JFrame {
                     .addComponent(jlableF12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jlableF13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JTCatatanPasien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jlableF18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -693,7 +718,7 @@ public class Perawatan extends javax.swing.JFrame {
                 .addComponent(jlableF19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 23, Short.MAX_VALUE)
+                .addGap(18, 38, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JBTambah, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JBKembali, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -704,9 +729,13 @@ public class Perawatan extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbuttonF1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF1ActionPerformed
-        tambahTableTindakan();
-    }//GEN-LAST:event_jbuttonF1ActionPerformed
+    private void JBTambahTindakanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTambahTindakanActionPerformed
+        if (JBTambahTindakan.getText().equals("Tambah")) {
+            tambahTableTindakan();
+        } else {
+            ubahTableTindakan();
+        }
+    }//GEN-LAST:event_JBTambahTindakanActionPerformed
 
     private void JCTindakanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JCTindakanKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -716,17 +745,29 @@ public class Perawatan extends javax.swing.JFrame {
 
     private void JTJumlahTindakanKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTJumlahTindakanKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            tambahTableTindakan();
+            if (JBTambahTindakan.getText().equals("Tambah")) {
+                tambahTableTindakan();
+            } else {
+                ubahTableTindakan();
+            }
         }
     }//GEN-LAST:event_JTJumlahTindakanKeyPressed
 
-    private void jbuttonF2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF2ActionPerformed
-        tambahTableObat();
-    }//GEN-LAST:event_jbuttonF2ActionPerformed
+    private void JBTambahObatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTambahObatActionPerformed
+        if (JBTambahObat.getText().equals("Tambah")) {
+            tambahTableObat();
+        } else {
+            ubahTableObat();
+        }
+    }//GEN-LAST:event_JBTambahObatActionPerformed
 
     private void JTJumlahObatKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_JTJumlahObatKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            tambahTableObat();
+            if (JBTambahObat.getText().equals("Tambah")) {
+                tambahTableObat();
+            } else {
+                ubahTableObat();
+            }
         }
     }//GEN-LAST:event_JTJumlahObatKeyPressed
 
@@ -752,13 +793,13 @@ public class Perawatan extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowClosed
 
-    private void jbuttonF3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF3ActionPerformed
+    private void JBHapusTindakanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBHapusTindakanActionPerformed
         hapusTableTindakan();
-    }//GEN-LAST:event_jbuttonF3ActionPerformed
+    }//GEN-LAST:event_JBHapusTindakanActionPerformed
 
-    private void jbuttonF4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbuttonF4ActionPerformed
+    private void JBHapusObatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBHapusObatActionPerformed
         hapusTableObat();
-    }//GEN-LAST:event_jbuttonF4ActionPerformed
+    }//GEN-LAST:event_JBHapusObatActionPerformed
 
     private void JBTambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBTambahActionPerformed
         tambahData();
@@ -773,7 +814,7 @@ public class Perawatan extends javax.swing.JFrame {
     }//GEN-LAST:event_JCTindakanItemStateChanged
 
     private void JCObatItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCObatItemStateChanged
-        
+
     }//GEN-LAST:event_JCObatItemStateChanged
     private void JBKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBKembaliActionPerformed
         dispose();
@@ -809,6 +850,36 @@ public class Perawatan extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JTCatatanPasienKeyPressed
 
+    private void JTableTindakanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableTindakanMouseClicked
+        if (JTableTindakan.getSelectedRow() != -1) {
+            JCTindakan.setSelectedItem(JTableTindakan.getValueAt(JTableTindakan.getSelectedRow(), 0).toString());
+            JTJumlahTindakan.setText(JTableTindakan.getValueAt(JTableTindakan.getSelectedRow(), 1).toString());
+            JBTambahTindakan.setText("Ubah");
+        } else {
+            JBTambahTindakan.setText("Tambah");
+        }
+    }//GEN-LAST:event_JTableTindakanMouseClicked
+
+    private void JTableObatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTableObatMouseClicked
+        if (JTableTindakan.getSelectedRow() != -1) {
+            JCObat.setSelectedItem(JTableObat.getValueAt(JTableObat.getSelectedRow(), 0).toString());
+            JTJumlahObat.setText(JTableObat.getValueAt(JTableObat.getSelectedRow(), 1).toString());
+            JBTambahObat.setText("Ubah");
+        } else {
+            JBTambahObat.setText("Tambah");
+        }
+    }//GEN-LAST:event_JTableObatMouseClicked
+
+    private void JBRefreshTindakanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBRefreshTindakanActionPerformed
+        JTableTindakan.clearSelection();
+        JBTambahTindakan.setText("Tambah");
+    }//GEN-LAST:event_JBRefreshTindakanActionPerformed
+
+    private void JBRefreshObatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBRefreshObatActionPerformed
+        JTableObat.clearSelection();
+        JBTambahObat.setText("Tambah");
+    }//GEN-LAST:event_JBRefreshObatActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -838,18 +909,6 @@ public class Perawatan extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -860,8 +919,14 @@ public class Perawatan extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private KomponenGUI.JbuttonF JBHapusObat;
+    private KomponenGUI.JbuttonF JBHapusTindakan;
     private KomponenGUI.JbuttonF JBKembali;
+    private KomponenGUI.JbuttonF JBRefreshObat;
+    private KomponenGUI.JbuttonF JBRefreshTindakan;
     private KomponenGUI.JbuttonF JBTambah;
+    private KomponenGUI.JbuttonF JBTambahObat;
+    private KomponenGUI.JbuttonF JBTambahTindakan;
     private KomponenGUI.JbuttonF JBUbah;
     private KomponenGUI.JcomboboxF JCNamaBeautician;
     private KomponenGUI.JcomboboxF JCNamaDokter;
@@ -884,10 +949,6 @@ public class Perawatan extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private KomponenGUI.JbuttonF jbuttonF1;
-    private KomponenGUI.JbuttonF jbuttonF2;
-    private KomponenGUI.JbuttonF jbuttonF3;
-    private KomponenGUI.JbuttonF jbuttonF4;
     private KomponenGUI.JlableF jlableF10;
     private KomponenGUI.JlableF jlableF11;
     private KomponenGUI.JlableF jlableF12;
@@ -912,28 +973,19 @@ public class Perawatan extends javax.swing.JFrame {
 
     void tambahTableTindakan() {
         if (checkTableTindakan()) {
-            if (JCTindakan.getSelectedIndex() != 0) {
-                DefaultTableModel model = (DefaultTableModel) JTableTindakan.getModel();
-                model.addRow(new Object[]{JCTindakan.getSelectedItem(), JTJumlahTindakan.getText()});
-                JCTindakan.requestFocus();
-                JTJumlahTindakan.setText("");
-            } else {
-                JOptionPane.showMessageDialog(this, "Silahkan Pilih Tindakan Terlebih Dahulu");
-            }
+            DefaultTableModel model = (DefaultTableModel) JTableTindakan.getModel();
+            model.addRow(new Object[]{JCTindakan.getSelectedItem(), JTJumlahTindakan.getText()});
+            JCTindakan.requestFocus();
+            JTJumlahTindakan.setText("");
         }
     }
 
     void tambahTableObat() {
         if (checkTableObat()) {
-            if (JCObat.getSelectedIndex() != 0) {
-                DefaultTableModel model = (DefaultTableModel) JTableObat.getModel();
-                model.addRow(new Object[]{JCObat.getSelectedItem(), JTJumlahObat.getText()});
-                JCObat.requestFocus();
-                JTJumlahObat.setText("");
-            } else {
-                JOptionPane.showMessageDialog(this, "Silahkan Pilih Obat Terlebih Dahulu");
-            }
-
+            DefaultTableModel model = (DefaultTableModel) JTableObat.getModel();
+            model.addRow(new Object[]{JCObat.getSelectedItem(), JTJumlahObat.getText()});
+            JCObat.requestFocus();
+            JTJumlahObat.setText("");
         }
     }
 
@@ -946,6 +998,32 @@ public class Perawatan extends javax.swing.JFrame {
     void hapusTableObat() {
         if (JTableObat.getSelectedRow() != -1) {
             ((DefaultTableModel) JTableObat.getModel()).removeRow(JTableObat.getSelectedRow());
+        }
+    }
+
+    void ubahTableTindakan() {
+        if (JTableTindakan.getSelectedRow() != -1) {
+            if (checkTableTindakan()) {
+                JTableTindakan.setValueAt(JCTindakan.getSelectedItem(), JTableTindakan.getSelectedRow(), 0);
+                JTableTindakan.setValueAt(JTJumlahTindakan.getText(), JTableTindakan.getSelectedRow(), 1);
+                JCTindakan.requestFocus();
+                JCTindakan.setSelectedIndex(0);
+                JTJumlahTindakan.setText("");
+                JTableTindakan.clearSelection();
+            }
+        }
+    }
+
+    void ubahTableObat() {
+        if (JTableObat.getSelectedRow() != -1) {
+            if (checkTableObat()) {
+                JTableObat.setValueAt(JCObat.getSelectedItem(), JTableObat.getSelectedRow(), 0);
+                JTableObat.setValueAt(JTJumlahObat.getText(), JTableObat.getSelectedRow(), 1);
+                JCObat.requestFocus();
+                JCObat.setSelectedIndex(0);
+                JTJumlahObat.setText("");
+                JTableObat.clearSelection();
+            }
         }
     }
 
@@ -965,7 +1043,7 @@ public class Perawatan extends javax.swing.JFrame {
                                 for (int j = 0; j < JTableObat.getRowCount(); j++) {
                                     Berhasil = multiInsert.Excute("INSERT INTO `tbobatdetail`(`NoInvoice`, `IdObat`, `Jumlah`) VALUES ('" + JTNoInvoice.getText() + "',(SELECT `IdBarang` FROM `tbmbarang` WHERE `NamaBarang` = '" + JTableObat.getValueAt(i, 0) + "'),'" + JTableObat.getValueAt(i, 1).toString().replace(".", "") + "')", null);
                                     if (Berhasil) {
-                                        Berhasil = multiInsert.Excute("UPDATE `tbantrian` SET `Status` = 1 WHERE `NoAntrian` = '" + JTNoAntrian.getText() + "'", null);
+                                        Berhasil = multiInsert.Excute("UPDATE `tbantrian` SET `Status` = 1 WHERE `NoAntrian` = '" + JTNoAntrian.getText() + "' AND `Tanggal` = CURDATE()", null);
                                     }
                                 }
                             }
@@ -975,10 +1053,10 @@ public class Perawatan extends javax.swing.JFrame {
                 if (Berhasil == false) {
                     multiInsert.rollback();
                     multiInsert.closecon();
-                    JOptionPane.showMessageDialog(this, "Gagal Tambah Data Perawatan");
+                    JOptionPaneF.showMessageDialog(this, "Gagal Tambah Data Perawatan");
                 }
                 if (Berhasil == true) {
-                    JOptionPane.showMessageDialog(this, "Berhasil Tambah Data Perawatan");
+                    JOptionPaneF.showMessageDialog(this, "Berhasil Tambah Data Perawatan");
                     multiInsert.Commit();
                     multiInsert.closecon();
 //                if (print) {
@@ -1048,10 +1126,10 @@ public class Perawatan extends javax.swing.JFrame {
                 if (Berhasil == false) {
                     multiInsert.rollback();
                     multiInsert.closecon();
-                    JOptionPane.showMessageDialog(this, "Gagal Ubah Data Perawatan");
+                    JOptionPaneF.showMessageDialog(this, "Gagal Ubah Data Perawatan");
                 }
                 if (Berhasil == true) {
-                    JOptionPane.showMessageDialog(this, "Berhasil Ubah Data Perawatan");
+                    JOptionPaneF.showMessageDialog(this, "Berhasil Ubah Data Perawatan");
                     multiInsert.Commit();
                     multiInsert.closecon();
 //                if (print) {

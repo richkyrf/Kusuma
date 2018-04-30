@@ -8,10 +8,11 @@ package File;
 import LSubProces.DRunSelctOne;
 import LSubProces.Update;
 import static File.EncMD5.getMD5;
+import FunctionGUI.JOptionPaneF;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import static GlobalVar.Var.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -254,15 +255,15 @@ public class GantiPassword extends javax.swing.JFrame {
                         dispose();
                     }
                 } else {
-                    JOptionPane.showMessageDialog(this, "Gagal Ganti Passsword. Password Lama Salah !!!", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPaneF.showMessageDialog(this, "Gagal Ganti Passsword. Password Lama Salah !!!", "Error", JOptionPane.ERROR_MESSAGE);
                     JTPasswordLama.requestFocus();
                 }
             } catch (Exception e) {
                 Eror.LogEror.SaveEror(e);
-                JOptionPane.showMessageDialog(this, "Gagal Ganti Password !!!", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPaneF.showMessageDialog(this, "Gagal Ganti Password !!!", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Gagal Ganti Password. Konfirmasi Password Tidak Sama Dengan Password Baru !!!", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPaneF.showMessageDialog(this, "Gagal Ganti Password. Konfirmasi Password Tidak Sama Dengan Password Baru !!!", "Error", JOptionPane.ERROR_MESSAGE);
             JTKonfirmasiPassword.requestFocus();
         }
     }

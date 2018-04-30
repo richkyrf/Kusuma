@@ -28,7 +28,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jcomCari1" max="32767" attributes="0"/>
+              <Component id="jcomCari1" pref="1180" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
@@ -42,7 +42,9 @@
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="jbuttonF4" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="602" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jCheckBoxF1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="JBRegister" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="JBRefresh" min="-2" max="-2" attributes="0"/>
@@ -76,6 +78,7 @@
                   <Component id="jbuttonF4" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JBTambah" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JBRegister" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jCheckBoxF1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -133,6 +136,7 @@
     </Component>
     <Component class="KomponenGUI.JcomCari" name="jcomCari1">
       <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="jcomCari1.jtablef.addMouseListener(new java.awt.event.MouseAdapter() {&#xa;    public void mouseClicked(java.awt.event.MouseEvent evt) {&#xa;        JTableTindakanMouseClicked(evt);&#xa;    }&#xa;});"/>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
       </AuxValues>
     </Component>
@@ -144,6 +148,15 @@
     <Component class="KomponenGUI.JtextF" name="jtextF1">
       <Events>
         <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtextF1KeyReleased"/>
+      </Events>
+    </Component>
+    <Component class="KomponenGUI.JCheckBoxF" name="jCheckBoxF1">
+      <Properties>
+        <Property name="selected" type="boolean" value="false"/>
+        <Property name="text" type="java.lang.String" value="Tampilkan Detail"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBoxF1ActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

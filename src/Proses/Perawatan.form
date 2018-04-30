@@ -27,24 +27,14 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="JBKembali" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="JBUbah" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="JBTambah" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="jPanel2" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Component id="jPanel2" alignment="0" min="-2" max="-2" attributes="0"/>
+              </Group>
           </Group>
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
@@ -123,14 +113,21 @@
                           </Group>
                       </Group>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="JBKembali" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="JBUbah" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="JBTambah" min="-2" max="-2" attributes="0"/>
+                          </Group>
                           <Component id="jlableF19" alignment="0" max="32767" attributes="0"/>
                           <Component id="jSeparator2" alignment="0" max="32767" attributes="0"/>
                           <Component id="jlableF18" alignment="0" max="32767" attributes="0"/>
                           <Component id="jSeparator1" alignment="1" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -186,7 +183,7 @@
                   <Component id="jlableF13" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JTCatatanPasien" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jlableF18" min="-2" max="-2" attributes="0"/>
@@ -198,7 +195,7 @@
               <Component id="jlableF19" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" pref="23" max="32767" attributes="0"/>
+              <EmptySpace type="separate" pref="38" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="JBTambah" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="JBKembali" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -323,10 +320,11 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jbuttonF3" max="32767" attributes="0"/>
-                      <Component id="jbuttonF1" max="32767" attributes="0"/>
+                      <Component id="JBHapusTindakan" max="32767" attributes="0"/>
+                      <Component id="JBTambahTindakan" max="32767" attributes="0"/>
+                      <Component id="JBRefreshTindakan" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -336,13 +334,17 @@
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="JCTindakan" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jbuttonF1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="JBTambahTindakan" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="JTJumlahTindakan" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jScrollPane1" min="-2" pref="106" max="-2" attributes="0"/>
-                      <Component id="jbuttonF3" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="JBHapusTindakan" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="JBRefreshTindakan" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -350,12 +352,12 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="KomponenGUI.JbuttonF" name="jbuttonF1">
+        <Component class="KomponenGUI.JbuttonF" name="JBTambahTindakan">
           <Properties>
             <Property name="text" type="java.lang.String" value="Tambah"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbuttonF1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBTambahTindakanActionPerformed"/>
           </Events>
         </Component>
         <Component class="KomponenGUI.JPlaceHolder" name="JTJumlahTindakan">
@@ -397,7 +399,7 @@
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="105" minWidth="105" prefWidth="105" resizable="true">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
@@ -408,15 +410,26 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="JTableTindakanMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
-        <Component class="KomponenGUI.JbuttonF" name="jbuttonF3">
+        <Component class="KomponenGUI.JbuttonF" name="JBHapusTindakan">
           <Properties>
             <Property name="text" type="java.lang.String" value="Hapus"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbuttonF3ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBHapusTindakanActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="KomponenGUI.JbuttonF" name="JBRefreshTindakan">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Refresh"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBRefreshTindakanActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -438,10 +451,11 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jbuttonF4" max="32767" attributes="0"/>
-                      <Component id="jbuttonF2" max="32767" attributes="0"/>
+                      <Component id="JBHapusObat" max="32767" attributes="0"/>
+                      <Component id="JBTambahObat" max="32767" attributes="0"/>
+                      <Component id="JBRefreshObat" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -451,13 +465,17 @@
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="JCObat" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jbuttonF2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="JBTambahObat" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="JTJumlahObat" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jScrollPane2" min="-2" pref="106" max="-2" attributes="0"/>
-                      <Component id="jbuttonF4" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="JBHapusObat" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="JBRefreshObat" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -465,12 +483,12 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="KomponenGUI.JbuttonF" name="jbuttonF2">
+        <Component class="KomponenGUI.JbuttonF" name="JBTambahObat">
           <Properties>
             <Property name="text" type="java.lang.String" value="Tambah"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbuttonF2ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBTambahObatActionPerformed"/>
           </Events>
         </Component>
         <Component class="KomponenGUI.JPlaceHolder" name="JTJumlahObat">
@@ -512,7 +530,7 @@
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="105" minWidth="105" prefWidth="105" resizable="true">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>
                       <Renderer/>
@@ -523,15 +541,26 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="JTableObatMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
-        <Component class="KomponenGUI.JbuttonF" name="jbuttonF4">
+        <Component class="KomponenGUI.JbuttonF" name="JBHapusObat">
           <Properties>
             <Property name="text" type="java.lang.String" value="Hapus"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jbuttonF4ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBHapusObatActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="KomponenGUI.JbuttonF" name="JBRefreshObat">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Refresh"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JBRefreshObatActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
