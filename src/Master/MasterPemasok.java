@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
-import javax.swing.JOptionPane;
+import FunctionGUI.JOptionPaneF;
 
 /**
  *
@@ -63,11 +63,11 @@ public class MasterPemasok extends javax.swing.JFrame {
 
     Boolean checkInput() {
         if (JTNamaBarang.getText().replace(" ", "").equals("")) {
-            JOptionPane.showMessageDialog(null, "Nama Tidak Boleh Kosong");
+            JOptionPaneF.showMessageDialog(null, "Gagal. Nama Tidak Boleh Kosong");
             JTNamaBarang.requestFocus();
             return false;
         } else if (JTNoTelpon.getText().replace(" ", "").equals("")) {
-            JOptionPane.showMessageDialog(null, "No. Telpon Tidak Boleh Kosong");
+            JOptionPaneF.showMessageDialog(null, "Gagal. No. Telpon Tidak Boleh Kosong");
             JTNoTelpon.requestFocus();
             return false;
         }
