@@ -62,15 +62,17 @@ public class Billing extends javax.swing.JFrame {
 
     void loadData(Object idEdit) {
         DRunSelctOne dRunSelctOne = new DRunSelctOne();
-        dRunSelctOne.seterorm("Eror gagal Menampilkan Data Billing");
-        dRunSelctOne.setQuery("SELECT `IdBilling` as 'ID', `NoBilling` as 'No. Billing', DATE_FORMAT(a.`Tanggal`,'%d-%m-%Y') as 'Tanggal', a.`NoInvoice` as 'No. Invoice', `NamaDokter` as 'Nama Dokter', IFNULL(`NamaBeautician`,'-- Pilih Nama Beautician --') as 'Nama Beautician', FORMAT(`Bayar`,0) as 'Jumlah Bayar' FROM `tbbilling`a JOIN `tbperawatan`b ON a.`NoInvoice`=b.`NoInvoice` JOIN `tbmdokter`c ON b.`IdDokter`=c.`IdDokter` LEFT JOIN `tbmbeautician`d ON b.`IdBeautician`=d.`IdBeautician` WHERE `IdBilling` = '" + Parameter + "'");
+        dRunSelctOne.seterorm("Eror Gagal Menampilkan Data Billing");
+        dRunSelctOne.setQuery("SELECT `IdBilling` as 'ID', `NoBilling` as 'No. Billing', DATE_FORMAT(a.`Tanggal`,'%d-%m-%Y') as 'Tanggal', a.`NoInvoice` as 'No. Invoice', b.`NoAntrian` as 'No. Antrian', `NamaDokter` as 'Dokter', IFNULL(`NamaBeautician`,'-- Pilih Nama Beautician --') as 'Beautician', CONCAT('(',`KodePasien`,') ',`NamaPasien`) as 'Pasien', FORMAT(`Bayar`,0) as 'Jumlah Bayar' FROM `tbbilling`a JOIN `tbperawatan`b ON a.`NoInvoice`=b.`NoInvoice` JOIN `tbantrian`c ON b.`NoAntrian`=c.`NoAntrian` AND b.`Tanggal`=c.`Tanggal` JOIN `tbmpasien`d ON c.`IdPasien`=d.`IdPasien` JOIN `tbmdokter`e ON b.`IdDokter`=e.`IdDokter` LEFT JOIN `tbmbeautician`f ON b.`IdBeautician`=f.`IdBeautician` WHERE `IdBilling` = '" + Parameter + "'");
         ArrayList<String> list = dRunSelctOne.excute();
         JTNoBilling.setText(list.get(1));
         JDTanggal.setDate(FDateF.strtodate(list.get(2), "dd-MM-yyyy"));
         JTNoInvoice.setText(list.get(3));
-        JCNamaDokter.setSelectedItem(list.get(3));
-        JCNamaBeautician.setSelectedItem(list.get(4));
-        //JTBayar.setInt(list.get(5));
+        JTNoAntrian.setText(list.get(4));
+        JCNamaDokter.setSelectedItem(list.get(5));
+        JCNamaBeautician.setSelectedItem(list.get(6));
+        JTNamaPasien.setText(list.get(7));
+        JTBayar.setInt(list.get(8).replace(",", ""));
         DefaultTableModel model = (DefaultTableModel) JTableTindakan.getModel();
         model.getDataVector().removeAllElements();
         RunSelct runSelct = new RunSelct();
@@ -83,7 +85,7 @@ public class Billing extends javax.swing.JFrame {
                 JTableTindakan.setValueAt(rs.getString(3), row, 0);
                 JTableTindakan.setValueAt(rs.getString(4).replace(",", "."), row, 1);
                 JTableTindakan.setValueAt(rs.getString(5).replace(",", "."), row, 2);
-                JTableTindakan.setValueAt(rs.getString(6).replace(",", "."), row, 2);
+                JTableTindakan.setValueAt(rs.getString(6).replace(",", "."), row, 3);
                 row++;
             }
         } catch (SQLException e) {
@@ -95,7 +97,7 @@ public class Billing extends javax.swing.JFrame {
         DefaultTableModel model2 = (DefaultTableModel) JTableObat.getModel();
         model2.getDataVector().removeAllElements();
         RunSelct runSelct2 = new RunSelct();
-        runSelct2.setQuery("SELECT `IdBillingObat` as 'ID', `NoBilling` as 'No. Billing', `NamaBarang` as 'Nama Obat', FORMAT(`Jumlah`,0) as 'Jumlah', FORMAT(`Harga`,0) as 'Harga', FORMAT(`Jumlah`*a.`Harga`,0) as 'Sub Total' FROM `tbbillingobat`a JOIN `tbmbarang`b ON a.`IdObat`=b.`IdBarang` WHERE `NoBilling` = '" + JTNoInvoice.getText() + "'");
+        runSelct2.setQuery("SELECT `IdBillingObat` as 'ID', `NoBilling` as 'No. Billing', `NamaBarang` as 'Nama Obat', FORMAT(`Jumlah`,0) as 'Jumlah', FORMAT(a.`Harga`,0) as 'Harga', FORMAT(`Jumlah`*a.`Harga`,0) as 'Sub Total' FROM `tbbillingobat`a JOIN `tbmbarang`b ON a.`IdObat`=b.`IdBarang` WHERE `NoBilling` = '" + JTNoBilling.getText() + "'");
         try {
             ResultSet rs2 = runSelct2.excute();
             int row2 = 0;
@@ -113,6 +115,7 @@ public class Billing extends javax.swing.JFrame {
         } finally {
             runSelct2.closecon();
         }
+        setGrandTotal();
     }
 
     void loadPerawatan(Object noInvoice) {
@@ -225,6 +228,9 @@ public class Billing extends javax.swing.JFrame {
             return false;
         } else if (JTableObat.getRowCount() == 0) {
             JOptionPaneF.showMessageDialog(this, "Gagal. Silahkan Isi Obat Terlebih Dahulu.");
+            return false;
+        } else if (JTBayar.getText().replace("0", "").isEmpty()) {
+            JOptionPaneF.showMessageDialog(this, "Gagal. Silahkan Masukkan Jumlah Bayar.");
             return false;
         } else {
             return true;
@@ -985,11 +991,11 @@ public class Billing extends javax.swing.JFrame {
     }//GEN-LAST:event_JBUbahActionPerformed
 
     private void JCTindakanItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCTindakanItemStateChanged
-        
+
     }//GEN-LAST:event_JCTindakanItemStateChanged
 
     private void JCObatItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_JCObatItemStateChanged
-        
+
     }//GEN-LAST:event_JCObatItemStateChanged
     private void JBKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JBKembaliActionPerformed
         dispose();

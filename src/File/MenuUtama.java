@@ -154,7 +154,7 @@ public class MenuUtama extends javax.swing.JFrame {
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Billing", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
 
-        jlableF5.setText("Antrian Billing : 0");
+        jlableF5.setText("Antrian Billing: 0");
 
         jbuttonF5.setText("Lihat");
         jbuttonF5.addActionListener(new java.awt.event.ActionListener() {
